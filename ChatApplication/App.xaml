@@ -8,7 +8,7 @@
             <Setter Property="Background" Value="#615EF0"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontSize" Value="30"/>
+            <Setter Property="FontSize" Value="24"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
