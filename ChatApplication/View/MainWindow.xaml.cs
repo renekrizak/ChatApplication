@@ -62,8 +62,8 @@ namespace ChatApplication
 
         private void CalculateScale()
         {
-            double yScale = ActualHeight / 350f;
-            double xScale = ActualWidth / 300f;
+            double yScale = ActualHeight / 720f;    //add window sizes for for 1:1 scale
+            double xScale = ActualWidth / 1280f;
             double value = Math.Min(xScale, yScale);
 
             ScaleValue = (double)OnCoerceScaleValue(myMainWindow, value);
