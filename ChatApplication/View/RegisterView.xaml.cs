@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace ChatClient.View
 {
     /// <summary>
-    /// Interaction logic for LoginPage.xaml
+    /// Interaction logic for RegisterView.xaml
     /// </summary>
-    public partial class LoginPage : Page
+    public partial class RegisterView : UserControl
     {
-        public LoginPage()
+        public RegisterView()
         {
             InitializeComponent();
         }

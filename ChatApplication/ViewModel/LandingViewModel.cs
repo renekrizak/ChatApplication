@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace ChatClient.ViewModel
 {
-    internal class BaseViewModel
+    public class LandingViewModel : ViewModelBase
     {
+        public LandingViewModel()
+        {
+
+        }
     }
 }
