@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace ChatClient.ViewModel
 {
-    internal class LoginViewModel
+    public class LoginViewModel : ViewModelBase
     {
+        public LoginViewModel()
+        {
+
+        }
     }
 }

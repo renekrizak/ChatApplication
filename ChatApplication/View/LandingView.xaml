@@ -10,9 +10,9 @@
         <TextBlock FontSize="20" Text="Welcome to {name}" Margin="0 0 0 100" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <Button Content="Log-in via existing account" VerticalAlignment="Center" HorizontalAlignment="Center"
                     Style="{StaticResource MainButtonStyle}"
-                    MinHeight="40" MinWidth="350" Margin="0 -15 0 0"/>
+                    MinHeight="40" MinWidth="350" Margin="0 -15 0 0" Command="{Binding NavigateLoginViewCommand}"/>
         <Button Content="Register" Style="{StaticResource MainButtonStyle}" VerticalAlignment="Center" HorizontalAlignment="Center"
-                    MinHeight="40" MinWidth="350" Margin="0 100 0 0"/>
-        <Border Style="{StaticResource LogoBorderStyle}"/>
+                    MinHeight="40" MinWidth="350" Margin="0 100 0 0" Command="{Binding NavigateRegisterViewCommand}"/>
+        <Border Style="{StaticResource LogoBorderStyle}" />
     </Grid>
 </UserControl>

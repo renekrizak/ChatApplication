@@ -5,18 +5,28 @@ using System.Text;
 using System.Threading.Tasks;
 using ChatClient.Core;
 using ChatClient.Net;
+using ChatClient.Store;
 
 namespace ChatClient.ViewModel
 {
-     class MainViewModel
+     class MainViewModel : ViewModelBase
     {
-        public RelayCommand ConnectToServerCommand { get; set; }
+        private readonly NavigationStore _navigationStore;
 
-        private Server _server;
-        public MainViewModel()
+
+
+        public ViewModelBase CurrentViewModel => _navigationStore.CurrentViewModel;
+
+        public MainViewModel(NavigationStore navigationStore)
         {
-            _server = new Server();
-            ConnectToServerCommand = new RelayCommand(o => _server.ConnectToServer());
+            _navigationStore = navigationStore;
+
+            _navigationStore.CurrentViewModelChanged += OnCurrentViewModelChanged;
+        }
+
+        private void OnCurrentViewModelChanged()
+        {
+            OnPropertyChanged(nameof(CurrentViewModel));
         }
         
     }
