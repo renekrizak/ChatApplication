@@ -58,11 +58,11 @@
                 </StackPanel>
                 <Button Style="{StaticResource MainButtonStyle}" Height="40" Width="350"
                     Content="Register" HorizontalAlignment="Center" VerticalAlignment="Bottom"
-                    Margin="0 0 0 140"/>
+                    Margin="0 0 0 140" Command="{Binding NavigateClientViewCommand}"/>
             </Grid>
             <Grid Grid.Row="2" Grid.Column="1">
                 <Button Style="{StaticResource MainButtonStyle}" Height="40" Width="450"
-                    Content="Alredy have an account? Log-in"/>
+                    Content="Alredy have an account? Log-in" Command="{Binding NavigateLoginViewCommand}"/>
             </Grid>
             <Grid Grid.Row="0" Grid.Column="0">
                 <Border  Style="{StaticResource LogoBorderStyle}"/>

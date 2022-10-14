@@ -22,7 +22,7 @@ namespace ChatApplication
     {
         public MainWindow() => InitializeComponent();
 
-        #region ScaleValue Depdency Property
+        
         public static readonly DependencyProperty ScaleValueProperty = DependencyProperty.Register("ScaleValue", typeof(double), typeof(MainWindow), new UIPropertyMetadata(1.0, new PropertyChangedCallback(OnScaleValueChanged), new CoerceValueCallback(OnCoerceScaleValue)));
 
         private static object OnCoerceScaleValue(DependencyObject o, object value)
@@ -56,7 +56,7 @@ namespace ChatApplication
             get => (double)GetValue(ScaleValueProperty);
             set => SetValue(ScaleValueProperty, value);
         }
-        #endregion
+        
 
         private void MainGrid_SizeChanged(object sender, EventArgs e) => CalculateScale();
 

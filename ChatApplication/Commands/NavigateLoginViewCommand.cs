@@ -20,7 +20,7 @@ namespace ChatClient.Commands
 
         public override void Execute(object parameter)
         {
-            _navigationStore.CurrentViewModel = new LoginViewModel();   
+            _navigationStore.CurrentViewModel = new LoginViewModel(_navigationStore);   
         }
     }
 }

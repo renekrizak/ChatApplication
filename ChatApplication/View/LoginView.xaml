@@ -30,26 +30,27 @@
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
                         Width="350" Height="40" Margin="0 0 0 120">
                 <Border Style="{StaticResource InputTextBoxBorder}">
-                    <TextBox Style="{StaticResource InputTextBoxStyle}"/>
+                    <TextBox Style="{StaticResource InputTextBoxStyle}" TextChanged="TextBox_TextChanged"
+                             x:Name="loginUsernameTB"/>
                 </Border>
                 <Label Style="{StaticResource InputTextBoxLabel}" Content="Username"
-                       Margin="0 -40 0 0"/>
+                       Margin="0 -40 0 0" x:Name="usernameLabel"/>
             </StackPanel>
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
                         Width="350" Height="40">
                 <Border Style="{StaticResource InputTextBoxBorder}">
-                    <TextBox Style="{StaticResource InputTextBoxStyle}"/>
+                    <TextBox Style="{StaticResource InputTextBoxStyle}" x:Name="loginPassTB" TextChanged="loginPassTB_TextChanged"/>
                 </Border>
                 <Label Style="{StaticResource InputTextBoxLabel}" Content="Password"
-                       Margin="0 -40 0 0"/>
+                       Margin="0 -40 0 0" x:Name="passwordLabel"/>
             </StackPanel>
             <Button Style="{StaticResource MainButtonStyle}" Height="40" Width="350"
                     Content="Login" HorizontalAlignment="Center" VerticalAlignment="Bottom"
-                    Margin="0 0 0 140"/>
+                    Margin="0 0 0 140" Command="{Binding NavigateClientViewCommand}"/>
         </Grid>
         <Grid Grid.Row="2" Grid.Column="1">
             <Button Style="{StaticResource MainButtonStyle}" Height="40" Width="450"
-                    Content="Don't have an acccount yet? Register"/>
+                    Content="Don't have an acccount yet? Register" Command="{Binding NavigateRegisterViewCommand}"/>
         </Grid>
     </Grid>
 </UserControl>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Sockets;
 using System.Net;
+using ChatServer.Net.IO;
 
 namespace ChatServer
 {
@@ -21,11 +22,24 @@ namespace ChatServer
                 var client = new Client(_listener.AcceptTcpClient());
                 _users.Add(client);
 
-                /* breadcast conn to everyone*/
+                /* broadcast conn to everyone*/
             }
            
-            
-            
+            //notifies other users when new person connects
+            static void BroadcastConnection()
+            {
+                foreach(var user in _users)
+                {
+                    foreach(var usr in _users)
+                    {
+                        var broadcastPacket = new PacketBuilder();
+                        broadcastPacket.WriteOpCode(1);
+                        broadcastPacket.WriteString(usr.Username);
+                        broadcastPacket.WriteString(usr.UID.ToString());
+                        user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes());
+                    }
+                }
+            }
             Console.WriteLine("Client connected");
 
         }

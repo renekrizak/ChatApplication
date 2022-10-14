@@ -24,5 +24,29 @@ namespace ChatClient.View
         {
             InitializeComponent();
         }
+
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(loginUsernameTB.Text.Length >= 1)
+            {
+                usernameLabel.Content = "";
+            }
+            else
+            {
+                usernameLabel.Content = "Username";
+            }
+        }
+
+        private void loginPassTB_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if(loginPassTB.Text.Length >= 1)
+            {
+                passwordLabel.Content = "";
+            }
+            else
+            {
+                passwordLabel.Content = "Password";
+            }
+        }
     }
 }

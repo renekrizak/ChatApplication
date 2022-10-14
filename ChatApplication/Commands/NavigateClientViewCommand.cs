@@ -1,26 +1,24 @@
-﻿using ChatClient.Store;
-using ChatClient.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
-
+using ChatClient.ViewModel;
+using ChatClient.Store;
 namespace ChatClient.Commands
 {
-    public class NavigateRegisterViewCommand : CommandBase
+    public class NavigateClientViewCommand : CommandBase
     {
         private readonly NavigationStore _navigationStore;
 
-        public NavigateRegisterViewCommand(NavigationStore navigationStore)
+        public NavigateClientViewCommand(NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
         }
 
         public override void Execute(object parameter)
         {
-            _navigationStore.CurrentViewModel = new RegisterViewModel(_navigationStore);
+            _navigationStore.CurrentViewModel = new ClientViewModel();
         }
 
     }

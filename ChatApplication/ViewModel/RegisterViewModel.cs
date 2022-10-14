@@ -8,16 +8,19 @@ using ChatClient.Store;
 using ChatClient.Commands;
 using System.Windows.Input;
 
+
 namespace ChatClient.ViewModel
 {
     public class RegisterViewModel : ViewModelBase
     {
       
+        public ICommand NavigateClientViewCommand { get; }
         public ICommand NavigateLoginViewCommand { get; }
 
-        public RegisterViewModel()
+        public RegisterViewModel(NavigationStore navigationStore)
         {
-
+            NavigateClientViewCommand = new NavigateClientViewCommand(navigationStore);
+            NavigateLoginViewCommand = new NavigateLoginViewCommand(navigationStore);
         }
      
     }
