@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using ChatClient.ViewModel;
 using ChatClient.Store;
+using ChatClient.Net;
 namespace ChatClient.Commands
 {
     public class NavigateClientViewCommand : CommandBase
@@ -18,6 +19,9 @@ namespace ChatClient.Commands
 
         public override void Execute(object parameter)
         {
+            var conn = new Server();
+            conn.ConnectToServer();
+
             _navigationStore.CurrentViewModel = new ClientViewModel();
         }
 

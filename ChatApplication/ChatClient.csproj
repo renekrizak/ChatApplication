@@ -8,11 +8,30 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="View\Icons\accountCircleIMG.png" />
+    <None Remove="View\Icons\expandMoreIMG.png" />
+    <None Remove="View\Icons\messagesIMG.png" />
+    <None Remove="View\Icons\searchIMG.png" />
+    <None Remove="View\Icons\settingsIMG.png" />
+    <None Remove="View\Icons\userAddIMG.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="Model\" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="CassandraCSharpDriver" Version="3.18.0" />
+    <PackageReference Include="Npgsql" Version="6.0.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="View\Icons\accountCircleIMG.png" />
+    <Resource Include="View\Icons\expandMoreIMG.png" />
+    <Resource Include="View\Icons\messagesIMG.png" />
+    <Resource Include="View\Icons\searchIMG.png" />
+    <Resource Include="View\Icons\settingsIMG.png" />
+    <Resource Include="View\Icons\userAddIMG.png" />
   </ItemGroup>
 
 </Project>

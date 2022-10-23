@@ -2,6 +2,7 @@
 using System.Net.Sockets;
 using System.Net;
 using ChatServer.Net.IO;
+using Npgsql;
 
 namespace ChatServer
 {
@@ -11,9 +12,10 @@ namespace ChatServer
         static TcpListener _listener;
         static void Main()
         {
-
+           // Queries.WriteUsers("test221", "username", "password", "email@email.com", DateTime.Now);
+            Queries.ReadUsers();
             _users = new List<Client>();
-            Console.WriteLine("Are you here cuh?");
+            
             _listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 9551);
             _listener.Start();
 
