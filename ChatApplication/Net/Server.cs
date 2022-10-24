@@ -26,6 +26,18 @@ namespace ChatClient.Net
                 connectPacket.WriteString("Username,password");
                 _client.Client.Send(connectPacket.GetPacketBytes());
             }
+        } 
+
+        public void LoginConnectToServer(string username, string password)
+        {
+            if(!_client.Connected)
+            {
+                _client.Connect("127.0.0.1", 9551);
+                var connectPacket = new PacketBuilder();
+                connectPacket.WriteOpCode(1);
+                connectPacket.WriteString($"{username}|{password}");
+                _client.Client.Send(connectPacket.GetPacketBytes());
+            }
         }
     }
 }
