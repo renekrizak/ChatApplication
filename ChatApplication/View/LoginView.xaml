@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:ChatClient.View"
+             xmlns:local="clr-namespace:ChatClient.View" xmlns:viewmodel="clr-namespace:ChatClient.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:LoginViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1280"
              Background="White">
@@ -31,7 +31,7 @@
                         Width="350" Height="40" Margin="0 0 0 120">
                 <Border Style="{StaticResource InputTextBoxBorder}">
                     <TextBox Style="{StaticResource InputTextBoxStyle}" TextChanged="TextBox_TextChanged"
-                             x:Name="loginUsernameTB"/>
+                             x:Name="loginUsernameTB" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"/>
                 </Border>
                 <Label Style="{StaticResource InputTextBoxLabel}" Content="Username"
                        Margin="0 -40 0 0" x:Name="usernameLabel"/>
@@ -39,7 +39,8 @@
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
                         Width="350" Height="40">
                 <Border Style="{StaticResource InputTextBoxBorder}">
-                    <TextBox Style="{StaticResource InputTextBoxStyle}" x:Name="loginPassTB" TextChanged="loginPassTB_TextChanged"/>
+                    <TextBox Style="{StaticResource InputTextBoxStyle}" x:Name="loginPassTB"
+                             Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}" TextChanged="loginPassTB_TextChanged"/>
                 </Border>
                 <Label Style="{StaticResource InputTextBoxLabel}" Content="Password"
                        Margin="0 -40 0 0" x:Name="passwordLabel"/>

@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:ChatClient.View"
+             xmlns:local="clr-namespace:ChatClient.View" xmlns:viewmodel="clr-namespace:ChatClient.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:RegisterViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1280"
              Background="White">
@@ -31,7 +31,7 @@
                         Width="350" Height="40" x:Name="UsernameStackPanel">
                     <Border Style="{StaticResource InputTextBoxBorder}">
                         <TextBox Style="{StaticResource InputTextBoxStyle}"
-                             x:Name="UsernameTextBox"/>
+                             x:Name="UsernameTextBox" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"/>
                     </Border>
                     <Label Style="{StaticResource InputTextBoxLabel}" Content="Username" Margin="0 -40 0 0"
                        x:Name="UsernameLabel"/>
@@ -41,7 +41,7 @@
                         Width="350" Height="40" x:Name="EmailStackPanel" Margin="0 0 0 120">
                     <Border Style="{StaticResource InputTextBoxBorder}">
                         <TextBox Style="{StaticResource InputTextBoxStyle}"
-                             x:Name="EmailTextBox"/>
+                             x:Name="EmailTextBox" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"/>
                     </Border>
                     <Label Style="{StaticResource InputTextBoxLabel}" Content="Email" Margin="0 -40 0 0"
                        x:Name="EmailLabel"/>
@@ -51,7 +51,7 @@
                         Width="350" Height="40" x:Name="PasswordStackPanel">
                     <Border Style="{StaticResource InputTextBoxBorder}">
                         <TextBox Style="{StaticResource InputTextBoxStyle}"
-                             x:Name="PasswordTextBox"/>
+                             x:Name="PasswordTextBox" Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"/>
                     </Border>
                     <Label Style="{StaticResource InputTextBoxLabel}" Content="Password" Margin="0 -40 0 0"
                        x:Name="PasswordLabel"/>
