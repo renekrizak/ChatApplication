@@ -2,11 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Data;
+using System.Windows.Documents;
 using System.Windows.Input;
 using ChatClient.Commands;
 using ChatClient.Model;
@@ -28,7 +31,12 @@ namespace ChatClient.ViewModel
             {
                 _username = value;
                 ObjPropertyChanged();
-                
+                /*Task.Run(() =>
+                {
+                    Debug.WriteLine($"Login: {Formatted}");
+                    Thread.Sleep(50);
+                });*/
+
             }
         }
         public string Password
@@ -43,12 +51,13 @@ namespace ChatClient.ViewModel
                 }
             }
         }
-
+    
         public ICommand NavigateClientViewCommand { get; }
         public ICommand NavigateRegisterViewCommand { get; }
         
         public LoginViewModel(NavigationStore navigationStore)
         {
+
             
             NavigateClientViewCommand = new NavigateClientViewCommand(navigationStore);
             NavigateRegisterViewCommand = new NavigateRegisterViewCommand(navigationStore);

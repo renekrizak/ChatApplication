@@ -27,6 +27,7 @@
                 <DataTemplate DataType="{x:Type viewmodel:ClientViewModel}">
                     <view:ClientView/>
                 </DataTemplate>
+                
             </ContentControl.Resources>
         </ContentControl>
         <Grid.LayoutTransform>
