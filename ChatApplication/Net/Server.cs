@@ -28,14 +28,26 @@ namespace ChatClient.Net
             }
         } 
 
-        public void LoginConnectToServer(string username, string password)
+        public void LoginConnectToServer(string loginInfo)
         {
             if(!_client.Connected)
             {
                 _client.Connect("127.0.0.1", 9551);
                 var connectPacket = new PacketBuilder();
                 connectPacket.WriteOpCode(1);
-                connectPacket.WriteString($"{username}|{password}");
+                connectPacket.WriteString(loginInfo);
+                _client.Client.Send(connectPacket.GetPacketBytes());
+            }
+        }
+
+        public void RegisterConnectToServer(string regInfo)
+        {
+            if(!_client.Connected)
+            {
+                _client.Connect("127.0.0.1", 9551);
+                var connectPacket = new PacketBuilder();
+                connectPacket.WriteOpCode(2);
+                connectPacket.WriteString(regInfo);
                 _client.Client.Send(connectPacket.GetPacketBytes());
             }
         }

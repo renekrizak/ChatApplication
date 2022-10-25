@@ -4,9 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ChatClient.View" xmlns:viewmodel="clr-namespace:ChatClient.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:RegisterViewModel}"
+             xmlns:converters="clr-namespace:ChatClient.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1280"
              Background="White">
+    <UserControl.Resources>
+        <converters:RegisterConverter x:Key="RegisterConverter"/>
+    </UserControl.Resources>
     <Grid>
         <Grid>
             <Grid.ColumnDefinitions>
@@ -27,21 +31,21 @@
                        Margin="0 57.5 0 0"
                        />
 
-                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 80 0 0"
+                <StackPanel HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0 85 0 0"
                         Width="350" Height="40" x:Name="UsernameStackPanel">
                     <Border Style="{StaticResource InputTextBoxBorder}">
                         <TextBox Style="{StaticResource InputTextBoxStyle}"
-                             x:Name="UsernameTextBox" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"/>
+                             x:Name="UsernameTB" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}" TextChanged="UsernameTB_TextChanged"/>
                     </Border>
                     <Label Style="{StaticResource InputTextBoxLabel}" Content="Username" Margin="0 -40 0 0"
                        x:Name="UsernameLabel"/>
                 </StackPanel>
 
                 <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
-                        Width="350" Height="40" x:Name="EmailStackPanel" Margin="0 0 0 120">
+                        Width="350" Height="40" x:Name="EmailStackPanel" Margin="0 0 0 100">
                     <Border Style="{StaticResource InputTextBoxBorder}">
                         <TextBox Style="{StaticResource InputTextBoxStyle}"
-                             x:Name="EmailTextBox" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}"/>
+                             x:Name="EmailTB" Text="{Binding Email, UpdateSourceTrigger=PropertyChanged}" TextChanged="EmailTB_TextChanged"/>
                     </Border>
                     <Label Style="{StaticResource InputTextBoxLabel}" Content="Email" Margin="0 -40 0 0"
                        x:Name="EmailLabel"/>
@@ -51,14 +55,22 @@
                         Width="350" Height="40" x:Name="PasswordStackPanel">
                     <Border Style="{StaticResource InputTextBoxBorder}">
                         <TextBox Style="{StaticResource InputTextBoxStyle}"
-                             x:Name="PasswordTextBox" Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}"/>
+                             x:Name="PassTB" Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}" TextChanged="PassTB_TextChanged"/>
                     </Border>
                     <Label Style="{StaticResource InputTextBoxLabel}" Content="Password" Margin="0 -40 0 0"
                        x:Name="PasswordLabel"/>
                 </StackPanel>
                 <Button Style="{StaticResource MainButtonStyle}" Height="40" Width="350"
                     Content="Register" HorizontalAlignment="Center" VerticalAlignment="Bottom"
-                    Margin="0 0 0 140" Command="{Binding NavigateClientViewCommand}"/>
+                    Margin="0 0 0 140" Command="{Binding RegisterUserCommand}">
+                    <Button.CommandParameter>
+                        <MultiBinding Converter="{StaticResource RegisterConverter}">
+                            <Binding ElementName="UsernameTB" Path="Text"/>
+                            <Binding ElementName="EmailTB" Path="Text"/>
+                            <Binding ElementName="PassTB" Path="Text"/>
+                        </MultiBinding>
+                    </Button.CommandParameter>
+                </Button>
             </Grid>
             <Grid Grid.Row="2" Grid.Column="1">
                 <Button Style="{StaticResource MainButtonStyle}" Height="40" Width="450"

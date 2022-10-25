@@ -3,37 +3,30 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using ChatClient.ViewModel;
-using ChatClient.Store;
+using System.Windows.Input;
 using ChatClient.Net;
-using System.Diagnostics;
-using System.Threading;
-using System.Management;
-using System.Windows.Controls;
+using ChatClient.Store;
+using ChatClient.ViewModel;
 
 namespace ChatClient.Commands
 {
-    public class NavigateClientViewCommand : CommandBase
+    public class RegisterUserCommand : CommandBase
     {
         private readonly NavigationStore _navigationStore;
 
-        public NavigateClientViewCommand(NavigationStore navigationStore)
+        public RegisterUserCommand(NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
-            
- 
         }
+
         public override void Execute(object parameter)
         {
             var values = (object[])parameter;
-            var username = $"{(string)values[0]}|{(string)values[1]}";
-            
+            var regData = $"{(string)values[0]}|{(string)values[1]}|{(string)values[2]}";
             var conn = new Server();
-           // conn.ConnectToServer();
-            conn.LoginConnectToServer(username);
-
+            conn.RegisterConnectToServer(regData);
             _navigationStore.CurrentViewModel = new ClientViewModel();
-        }
 
+        }
     }
 }

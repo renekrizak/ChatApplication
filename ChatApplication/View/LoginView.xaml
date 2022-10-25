@@ -4,10 +4,15 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ChatClient.View" xmlns:viewmodel="clr-namespace:ChatClient.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:LoginViewModel}"
+             xmlns:converters="clr-namespace:ChatClient.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1280"
              Background="White">
+    <UserControl.Resources>
+        <converters:LoginConverter x:Key="LoginConverter"/>
+    </UserControl.Resources>
     <Grid>
+        
         <Grid.RowDefinitions>
             <RowDefinition Height="3*"/>
             <RowDefinition Height="9*"/>
@@ -22,13 +27,14 @@
             <Border Style="{StaticResource LogoBorderStyle}"/>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="1">
-            <TextBlock Text="Type in your username and password"
+           
+                <TextBlock Text="Type in your username and password"
                        FontFamily="Metropolis" Foreground="Black"
                        Opacity="70" FontWeight="SemiBold" FontSize="16" HorizontalAlignment="Center"
                        Margin="0 110 0 0"
                        />
             <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center"
-                        Width="350" Height="40" Margin="0 0 0 120">
+                        Width="350" Height="40" Margin="0 0 0 100">
                 <Border Style="{StaticResource InputTextBoxBorder}">
                     <TextBox Style="{StaticResource InputTextBoxStyle}" TextChanged="TextBox_TextChanged"
                              x:Name="loginUsernameTB" Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"/>
@@ -40,14 +46,25 @@
                         Width="350" Height="40">
                 <Border Style="{StaticResource InputTextBoxBorder}">
                     <TextBox Style="{StaticResource InputTextBoxStyle}" x:Name="loginPassTB"
-                             Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}" TextChanged="loginPassTB_TextChanged"/>
+                             Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}" TextChanged="loginPassTB_TextChanged"
+                             />
                 </Border>
                 <Label Style="{StaticResource InputTextBoxLabel}" Content="Password"
                        Margin="0 -40 0 0" x:Name="passwordLabel"/>
             </StackPanel>
             <Button Style="{StaticResource MainButtonStyle}" Height="40" Width="350"
-                    Content="Login" HorizontalAlignment="Center" VerticalAlignment="Bottom"
-                    Margin="0 0 0 140" Command="{Binding NavigateClientViewCommand}"/>
+                    Content="Login" x:Name="LoginButton" HorizontalAlignment="Center" VerticalAlignment="Bottom"
+                    Margin="0 0 0 140" Command="{Binding NavigateClientViewCommand}">
+                <Button.CommandParameter>
+                    <MultiBinding Converter="{StaticResource LoginConverter}">
+                        <Binding ElementName="loginUsernameTB" Path="Text"/>
+                        <Binding ElementName="loginPassTB" Path="Text"/>
+                    </MultiBinding>
+                </Button.CommandParameter>
+            </Button>
+
+
+
         </Grid>
         <Grid Grid.Row="2" Grid.Column="1">
             <Button Style="{StaticResource MainButtonStyle}" Height="40" Width="450"
