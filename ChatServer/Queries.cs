@@ -4,7 +4,7 @@ namespace ChatServer
 {
     public class Queries
     {
-        private static string connString = "Host=localhost;Username=postgres;password=password;Database=postgres"; //Set to your own
+        private static string connString = "Host=localhost;Username=postgres;password=LquS00QC20kl1;Database=postgres"; //Set to your own
 
         public static async void WriteMessageQuery(string id, string conversation_id, string author_id, string message)
         {
@@ -16,6 +16,21 @@ namespace ChatServer
                 cmd.Parameters.AddWithValue("c_id", conversation_id);
                 cmd.Parameters.AddWithValue("a_id", author_id);
                 cmd.Parameters.AddWithValue("msg", message);
+                await cmd.ExecuteNonQueryAsync();
+            }
+        }
+
+        public static async void RegisterClientQuery(Guid UID, string username, string email, string password, DateTime date)
+        {
+            await using var dbConn = new NpgsqlConnection(connString);
+            await dbConn.OpenAsync();
+            await using(var cmd = new NpgsqlCommand("INSERT INTO users(id, username, password, email, date_joined) VALUES(@id, @username, @password, @email, @date_joined)", dbConn))
+            {
+                cmd.Parameters.AddWithValue("id", UID.ToString());
+                cmd.Parameters.AddWithValue("username", username);
+                cmd.Parameters.AddWithValue("password", password);
+                cmd.Parameters.AddWithValue("email", email);
+                cmd.Parameters.AddWithValue("@date_joined", date);
                 await cmd.ExecuteNonQueryAsync();
             }
         }
