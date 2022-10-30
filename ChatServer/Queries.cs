@@ -35,6 +35,30 @@ namespace ChatServer
             }
         }
 
+        public static string ReturnIDQuery(string username, string password)
+        {
+            using var dbConn = new NpgsqlConnection(connString);
+            dbConn.Open();
+            Console.WriteLine(username);
+            Console.WriteLine(password);
+            using(var cmd = new NpgsqlCommand($"SELECT ID FROM users WHERE username='{username}' and password='{password}'", dbConn))
+            {
+                cmd.Parameters.AddWithValue("username", username);
+                cmd.Parameters.AddWithValue("password", password);
+                var result = cmd.ExecuteScalar();
+                if(result != null)
+                {
+                    return result.ToString();
+                } else
+                {
+                    return "No ID";
+                }
+            }
+            
+        }
+
+       
+
         public static async void WriteRoomUsers(string user_id, string room_id)
         {
             await using var dbConn = new NpgsqlConnection(connString);

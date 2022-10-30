@@ -1,6 +1,7 @@
 ﻿using ChatServer.Net.IO;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
@@ -22,16 +23,24 @@ namespace ChatServer
             ClientSocket = client;
            // UID = Guid.NewGuid();
             _packetReader = new PacketReader(ClientSocket.GetStream());
-
             var opcode = _packetReader.ReadByte(); //add checks for opcode
             data = _packetReader.readMessage();
+            Console.WriteLine($"[{DateTime.Now}]: Client has connected with the username: {data}");
+
+            if (opcode == 1)
+            {
+                string username = LoginUsername(data);
+                string password = LoginPassword(data);
+                Console.WriteLine(Queries.ReturnIDQuery(username, password));   
+            }
 
             if(opcode == 2)
             {
                 RegisterClient(Guid.NewGuid(), RegisterUsername(data), RegisterEmail(data), RegisterPassword(data), DateTime.Today);   
+                
             }
                 
-            Console.WriteLine($"[{DateTime.Now}]: Client has connected with the username: {data}");
+            
         }
 
         public void RegisterClient(Guid UID, string username, string email, string password, DateTime date)
@@ -114,6 +123,55 @@ namespace ChatServer
                     count++;
                 }
                 lastPos++;
+            }
+            return result;
+        }
+
+        public string LoginUsername(string data)
+        {
+            bool loopFlag = true;
+            int lastPos = 0;
+            int count = 0;
+            string result = "";
+            while(loopFlag)
+            {
+                if (data[lastPos] == '|')
+                {
+                    return result;
+                }
+                if (count == 0)
+                {
+                    result += data[lastPos];
+                }
+                lastPos++;
+            }
+            return "test1Meno";
+            
+        }
+        public string LoginPassword(string data)
+        {
+            bool loopFlag = true;
+            int lastPos = 0;
+            int count = 0;
+            string result = "";
+            while (loopFlag)
+            {
+                
+                if(lastPos == data.Length)
+                {
+                    return result;
+                }
+                if(count == 1)
+                {
+                    result += data[lastPos];
+                }
+                if (data[lastPos] == '|')
+                {
+                    count++;
+                }
+               
+                lastPos++;
+
             }
             return result;
         }
