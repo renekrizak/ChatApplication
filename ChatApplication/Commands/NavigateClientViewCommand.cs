@@ -27,11 +27,9 @@ namespace ChatClient.Commands
         {
             var values = (object[])parameter;
             var username = $"{(string)values[0]}|{(string)values[1]}";
-            
             var conn = new Server();
-           // conn.ConnectToServer();
             conn.LoginConnectToServer(username);
-
+            
             _navigationStore.CurrentViewModel = new ClientViewModel();
         }
 
