@@ -18,6 +18,7 @@ namespace ChatServer
         public Guid UID { get; set; }
         public TcpClient ClientSocket { get; set; }
         PacketReader _packetReader;
+        PacketBuilder _packetBuilder;
         public Client(TcpClient client)
         {
             ClientSocket = client;
@@ -31,7 +32,15 @@ namespace ChatServer
             {
                 string username = LoginUsername(data);
                 string password = LoginPassword(data);
-                Console.WriteLine(Queries.ReturnIDQuery(username, password));   
+                string ClientID = Queries.ReturnIDQuery(username, password);
+                if(ClientID != "No ID")
+                {
+                    var idPacket = new PacketBuilder();
+                    idPacket.WriteOpCode(1);
+                    idPacket.WriteString(ClientID);
+                    ClientSocket.Client.Send(idPacket.GetPacketBytes());
+                    
+                }
             }
 
             if(opcode == 2)
@@ -39,7 +48,18 @@ namespace ChatServer
                 RegisterClient(Guid.NewGuid(), RegisterUsername(data), RegisterEmail(data), RegisterPassword(data), DateTime.Today);   
                 
             }
-                
+            if(opcode == 3)
+            {
+                Console.WriteLine(data);
+            }
+ 
+        }
+
+        private static void SendIDToClient(TcpClient client, string id)
+        {
+            var idPacket = new PacketBuilder();
+            idPacket.WriteOpCode(1);
+            idPacket.WriteString(id);
             
         }
 
@@ -47,11 +67,6 @@ namespace ChatServer
         {
             Queries.RegisterClientQuery(UID, username, email, password, date);
         }
-
-        
-        
-        
-
 
         /*
          Extracts username from the register packet
