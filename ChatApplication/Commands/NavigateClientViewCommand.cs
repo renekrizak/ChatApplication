@@ -20,17 +20,16 @@ namespace ChatClient.Commands
         public NavigateClientViewCommand(NavigationStore navigationStore)
         {
             _navigationStore = navigationStore;
-            
- 
         }
+
         public override void Execute(object parameter)
         {
             var values = (object[])parameter;
             var username = $"{(string)values[0]}|{(string)values[1]}";
-            var conn = new Server();
-            conn.LoginConnectToServer(username);
+           // var conn = new Server();
+            //conn.LoginConnectToServer(username);
             
-            _navigationStore.CurrentViewModel = new ClientViewModel();
+            _navigationStore.CurrentViewModel = new ClientViewModel((string)values[0], (string)values[1]);
         }
 
     }
