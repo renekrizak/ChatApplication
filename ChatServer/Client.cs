@@ -26,5 +26,7 @@ namespace ChatServer
 
             Console.WriteLine($"[{DateTime.Now}]: Client has connected with the username: {Username}");
         }
+
+        
     }
 }

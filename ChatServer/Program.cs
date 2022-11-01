@@ -12,7 +12,7 @@ namespace ChatServer
         static TcpListener _listener;
         static void Main()
         {
-           // Queries.WriteUsers("test221", "username", "password", "email@email.com", DateTime.Now);
+            Queries.WriteUsers("test221", "username", "password", "email@email.com", DateTime.Now);
             Queries.ReadUsers();
             _users = new List<Client>();
             
