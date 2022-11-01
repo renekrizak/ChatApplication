@@ -19,7 +19,7 @@ namespace ChatClient.Net
         {
             _client = new TcpClient();
         }
-
+        //maybe connect after you reach client view and only give access once you get UID?
         public void LoginConnectToServer(string loginInfo)
         {
             if(!_client.Connected)

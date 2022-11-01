@@ -89,11 +89,12 @@
             <StackPanel Grid.Row="2">
                 <Button Style="{StaticResource MainButtonStyle}"
                         Width="180" Height="40" HorizontalAlignment="Right" 
-                        Margin="0 20 15 0" Content="Send"
-                        Command="{Binding SendMessageCommand}" CommandParameter="{Binding Message}"/>
+                        Margin="0 20 15 0" Content="Send" Command="{Binding SendMessage}"
+                        />
                 <Border Style="{StaticResource InputTextBoxBorder}" Width="500" Height="40"
                             HorizontalAlignment="Left" Margin="20 -40 0 0">
-                    <TextBox Style="{StaticResource InputTextBoxStyle}" Width="500" Height="40"/>
+                    <TextBox Style="{StaticResource InputTextBoxStyle}" Width="500" Height="40"
+                             Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}"/>
                 </Border>
             </StackPanel>
         </Grid>
