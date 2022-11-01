@@ -21,7 +21,6 @@ namespace ChatClient.ViewModel
     public class LoginViewModel : ViewModelBase
     {
       
-      
         private string _username;
         private string _password;
         public string Username
@@ -57,11 +56,8 @@ namespace ChatClient.ViewModel
         
         public LoginViewModel(NavigationStore navigationStore)
         {
-
-            
             NavigateClientViewCommand = new NavigateClientViewCommand(navigationStore);
             NavigateRegisterViewCommand = new NavigateRegisterViewCommand(navigationStore);
-            
         }
     }
 }

@@ -27,6 +27,6 @@ namespace ChatClient.Commands
             conn.RegisterConnectToServer(regData);
             _navigationStore.CurrentViewModel = new ClientViewModel();
 
-        }
+        } 
     }
 }
