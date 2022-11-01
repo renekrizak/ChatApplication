@@ -4,12 +4,13 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ChatClient.View"
+             xmlns:viewmodel="clr-namespace:ChatClient.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:ClientViewModel}"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1280"
              Background="White">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1.5*"/>
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="10*"/>
             <ColumnDefinition Width="3*"/>
@@ -17,31 +18,35 @@
 
         <Grid Grid.Column="0" Name="SideBarGrid">
             <Grid.RowDefinitions>
-                <RowDefinition Height="2*"/>
+                <RowDefinition Height="4*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="3*"/>
                 <RowDefinition Height="8*"/>
-                <RowDefinition Height="2*"/>
+                <RowDefinition Height="4*"/>
             </Grid.RowDefinitions>
             <Border Grid.Column="0" Grid.Row="0" Style="{StaticResource LogoBorderStyle}"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center"
                     Margin="0 0 0 0"/>
             <Button Style="{StaticResource IconButtonStyle}" x:Name="ProfileButton"
-                    Margin="0 0 0 400">
+                    Margin="0 0 4 0" Grid.Row="1" Grid.Column="0">
                 <Image Source="Icons\accountCircleIMG.png"/>
             </Button>
             <Button Style="{StaticResource IconButtonStyle}" x:Name="SearchButton"
-                    Margin="0 0 0 -50">
+                    Margin="0 0 0 0" Grid.Row="2">
                 <Image Source="Icons\searchIMG.png"></Image>
             </Button>
             <Button Style="{StaticResource IconButtonStyle}" x:Name="AddUserButton"
-                    Margin="0 0 0 100">
+                    Margin="0 0 -4 0" Grid.Row="3">
                 <Image Source="Icons\userAddIMG.png"/>
             </Button>
             <Button Style="{StaticResource IconButtonStyle}" x:Name="MessagesButton"
-                    Margin="0 0 0 225">
+                    Margin="0 0 4 0" Grid.Row="4">
                 <Image Source="Icons\messagesIMG.png"/>
             </Button>
-            <Button Style="{StaticResource IconButtonStyle}" Grid.Row="2">
+            <Button Style="{StaticResource IconButtonStyle}" Grid.Row="7">
                 <Image Source="Icons\settingsIMG.png"/>
             </Button>      
             
@@ -74,6 +79,23 @@
                        HorizontalAlignment="Left" Margin="8 -35 0 0"/>
                 </StackPanel>
             </Grid>
+        </Grid>
+        <Grid Grid.Column="2" Name="MessageView">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="3*"/>
+                <RowDefinition Height="15*"/>
+                <RowDefinition Height="2*"/>
+            </Grid.RowDefinitions>
+            <StackPanel Grid.Row="2">
+                <Button Style="{StaticResource MainButtonStyle}"
+                        Width="180" Height="40" HorizontalAlignment="Right" 
+                        Margin="0 20 15 0" Content="Send"
+                        Command="{Binding SendMessageCommand}" CommandParameter="{Binding Message}"/>
+                <Border Style="{StaticResource InputTextBoxBorder}" Width="500" Height="40"
+                            HorizontalAlignment="Left" Margin="20 -40 0 0">
+                    <TextBox Style="{StaticResource InputTextBoxStyle}" Width="500" Height="40"/>
+                </Border>
+            </StackPanel>
         </Grid>
     </Grid>
 </UserControl>

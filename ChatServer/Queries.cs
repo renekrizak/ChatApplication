@@ -20,6 +20,45 @@ namespace ChatServer
             }
         }
 
+        public static async void RegisterClientQuery(Guid UID, string username, string email, string password, DateTime date)
+        {
+            await using var dbConn = new NpgsqlConnection(connString);
+            await dbConn.OpenAsync();
+            await using(var cmd = new NpgsqlCommand("INSERT INTO users(id, username, password, email, date_joined) VALUES(@id, @username, @password, @email, @date_joined)", dbConn))
+            {
+                cmd.Parameters.AddWithValue("id", UID.ToString());
+                cmd.Parameters.AddWithValue("username", username);
+                cmd.Parameters.AddWithValue("password", password);
+                cmd.Parameters.AddWithValue("email", email);
+                cmd.Parameters.AddWithValue("@date_joined", date);
+                await cmd.ExecuteNonQueryAsync();
+            }
+        }
+
+        public static string ReturnIDQuery(string username, string password)
+        {
+            using var dbConn = new NpgsqlConnection(connString);
+            dbConn.Open();
+            Console.WriteLine(username);
+            Console.WriteLine(password);
+            using(var cmd = new NpgsqlCommand($"SELECT ID FROM users WHERE username='{username}' and password='{password}'", dbConn))
+            {
+                cmd.Parameters.AddWithValue("username", username);
+                cmd.Parameters.AddWithValue("password", password);
+                var result = cmd.ExecuteScalar();
+                if(result != null)
+                {
+                    return result.ToString();
+                } else
+                {
+                    return "No ID";
+                }
+            }
+            
+        }
+
+       
+
         public static async void WriteRoomUsers(string user_id, string room_id)
         {
             await using var dbConn = new NpgsqlConnection(connString);

@@ -8,6 +8,12 @@ namespace ChatServer
 {
     class Program
     {
+        /*
+         OP Codes:
+         1-Login
+         2-Register
+         
+         */
         static List<Client> _users;
         static TcpListener _listener;
         static void Main()
@@ -36,7 +42,7 @@ namespace ChatServer
                     {
                         var broadcastPacket = new PacketBuilder();
                         broadcastPacket.WriteOpCode(1);
-                        broadcastPacket.WriteString(usr.Username);
+                        broadcastPacket.WriteString(usr.data);
                         broadcastPacket.WriteString(usr.UID.ToString());
                         user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes());
                     }
