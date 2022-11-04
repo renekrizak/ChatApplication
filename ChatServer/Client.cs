@@ -15,6 +15,7 @@ namespace ChatServer
         public string Username { get; set; }
         public string Password { get; set; }
         public string Email { get; set; }
+        public string ID { get; set; }
         public Guid UID { get; set; }
         
         public TcpClient ClientSocket { get; set; }
@@ -25,6 +26,7 @@ namespace ChatServer
             ClientSocket = client;
            // UID = Guid.NewGuid();
             _packetReader = new PacketReader(ClientSocket.GetStream());
+
             var opcode = _packetReader.ReadByte(); //add checks for opcode
             data = _packetReader.readMessage();
             Username = LoginUsername(data);
@@ -46,22 +48,16 @@ namespace ChatServer
                         case 1:
                             string username = LoginUsername(data);
                             string password = LoginPassword(data);
-                            string uid = Queries.ReturnIDQuery(username, password);
-                            var idPacket = new PacketBuilder();
-                            idPacket.WriteOpCode(1);
-                            idPacket.WriteString(uid);
-                            ClientSocket.Client.Send(idPacket.GetPacketBytes());
-                            Console.WriteLine($"User with credentials {username}, {password} connected & has UID: {uid}");
+                           
                             break;
                         case 2:
                             username = RegisterUsername(data);
                             password = RegisterPassword(data);
                             string email = RegisterPassword(data);
                             Queries.RegisterClientQuery(Guid.NewGuid(), username, email, password, DateTime.Now);
-                            uid = Queries.ReturnIDQuery(username, password);
+                            string uid = Queries.ReturnIDQuery(username, password);
                             Console.WriteLine($"User with credentials: {data} registered and has UID: {uid}");
                             break;
-
                         case 3:
                             var msg = _packetReader.ReadString();
                             Console.WriteLine($"Message recieved: {msg}");
@@ -74,7 +70,6 @@ namespace ChatServer
                 {
                     Console.WriteLine($"[{Username}] Disconnected");
                     Program.BroadcastDisconnect(Username.ToString());
-                    
                     ClientSocket.Close();
                     break;
 
@@ -87,13 +82,7 @@ namespace ChatServer
             var idPacket = new PacketBuilder();
             idPacket.WriteOpCode(1);
             idPacket.WriteString(id);
-          
-            
-        }
-
-        public void RegisterClient(Guid UID, string username, string email, string password, DateTime date)
-        {
-            Queries.RegisterClientQuery(UID, username, email, password, date);
+        
         }
 
         /*

@@ -52,8 +52,10 @@ namespace ChatServer
             {
                 var user = _users.Last();
                 var idPacket = new PacketBuilder();
+                string id = Queries.ReturnIDQuery(user.Username, user.Password);
+                user.ID = id;
                 idPacket.WriteOpCode(1);
-                idPacket.WriteString(user.Username);
+                idPacket.WriteString(id);
                 user.ClientSocket.Client.Send(idPacket.GetPacketBytes());
             }
      

@@ -87,7 +87,7 @@ namespace ChatClient.Net
         }
         public void SendMessageToServer(string message)
         {
-           
+            Debug.WriteLine($"Message: {message}");
                 var messagePacket = new PacketBuilder();
                 messagePacket.WriteOpCode(3);
                 messagePacket.WriteString(message);
