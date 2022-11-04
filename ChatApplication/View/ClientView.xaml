@@ -8,6 +8,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1280"
              Background="White">
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1.5*"/>
@@ -103,12 +104,12 @@
             <StackPanel Grid.Row="2">
                 <Button Style="{StaticResource MainButtonStyle}"
                         Width="180" Height="40" HorizontalAlignment="Right" 
-                        Margin="0 20 15 0" Content="Send" Command="{Binding SendMessage}"
+                        Margin="0 20 15 0" Content="Send" Command="{Binding SendMessageCommand}"
                         />
                 <Border Style="{StaticResource InputTextBoxBorder}" Width="500" Height="40"
                             HorizontalAlignment="Left" Margin="20 -40 0 0">
                     <TextBox Style="{StaticResource InputTextBoxStyle}" Width="500" Height="40"
-                             Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}"/>
+                            Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}"/>
                 </Border>
             </StackPanel>
         </Grid>
