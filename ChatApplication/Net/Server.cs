@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Net.Sockets;
 using ChatClient.Net.IO;
 using System.Diagnostics;
+using ChatClient.ViewModel;
 
 namespace ChatClient.Net
 {
@@ -15,6 +16,10 @@ namespace ChatClient.Net
         public PacketReader PacketReader;
 
         public event Action connectedEvent;
+        public event Action msgReceivedEvent;
+        public event Action disconnectedEvent;
+        public event Action IDReceivedEvent;
+
         public Server()
         {
             _client = new TcpClient();
@@ -32,8 +37,9 @@ namespace ChatClient.Net
                     connectPacket.WriteOpCode(1);
                     connectPacket.WriteString(loginInfo);
                     _client.Client.Send(connectPacket.GetPacketBytes());
-
                 }
+                ReadPackets();
+
             }   
         }
         public void RegisterConnectToServer(string regInfo)
@@ -50,15 +56,25 @@ namespace ChatClient.Net
         private void ReadPackets()
         {
             Task.Run(() =>
-            { 
+            {
+                Debug.WriteLine("Started reading");
                 while(true)
                 {
                     var opcode = PacketReader.ReadByte();
                     switch(opcode)
                     {
                         case 1:
-                            
-                            Debug.WriteLine(PacketReader.ReadString());
+                            IDReceivedEvent?.Invoke();
+                            break;
+                        case 5:
+                            Debug.WriteLine("Niekto sa connectol");
+                            connectedEvent?.Invoke();
+                            break;
+                        case 4:
+                            msgReceivedEvent?.Invoke();
+                            break;
+                        case 10:
+                            disconnectedEvent?.Invoke();
                             break;
                         default:
                             
@@ -71,15 +87,11 @@ namespace ChatClient.Net
         }
         public void SendMessageToServer(string message)
         {
-            if(!_client.Connected)
-            {
-                _client.Connect("127.0.0.1", 9551);
+           
                 var messagePacket = new PacketBuilder();
                 messagePacket.WriteOpCode(3);
                 messagePacket.WriteString(message);
                 _client.Client.Send(messagePacket.GetPacketBytes());
-            }
-            
         }
     }
 }

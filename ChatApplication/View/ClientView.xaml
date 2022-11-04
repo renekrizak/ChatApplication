@@ -48,35 +48,45 @@
             </Button>
             <Button Style="{StaticResource IconButtonStyle}" Grid.Row="7">
                 <Image Source="Icons\settingsIMG.png"/>
-            </Button>      
-            
+            </Button>
+
         </Grid>
         <Grid Grid.Column="1" Name="MessagesSideBar">
             <Grid.RowDefinitions>
                 <RowDefinition Height="2*"/>
                 <RowDefinition Height="10*"/>
             </Grid.RowDefinitions>
-            
-                <TextBlock Text="Messages" FontFamily="Metropolis"
+
+            <TextBlock Text="Messages" FontFamily="Metropolis"
                            FontSize="26" FontWeight="Medium" HorizontalAlignment="Left" 
                            VerticalAlignment="Center"
                            Grid.Column="1" Grid.Row="0"/>
-                <Button Style="{StaticResource IconButtonStyle}" Width="32" Height="32"
+            <Button Style="{StaticResource IconButtonStyle}" Width="32" Height="32"
                         HorizontalAlignment="Right" VerticalAlignment="Center"
                          Grid.Row="0" Margin="0 0 55 0">
-                    <Image Source="Icons\expandMoreIMG.png"/>
-                </Button>
+                <Image Source="Icons\expandMoreIMG.png"/>
+            </Button>
             <Grid Grid.Row="1" Name="SideBarRoomList">
                 <StackPanel VerticalAlignment="Top" Height="40">
                     <Border Style="{StaticResource InputTextBoxBorder}" Width="200" VerticalAlignment="Top"
                         HorizontalAlignment="Center" Opacity="0.25">
-                    <TextBox Style="{StaticResource InputTextBoxStyle}" Width="200"/>
-                </Border>
-                <Label Style="{StaticResource InputTextBoxLabel}" Content="Search messages"
+                        <TextBox Style="{StaticResource InputTextBoxStyle}" Width="200"/>
+                    </Border>
+                    <Label Style="{StaticResource InputTextBoxLabel}" Content="Search messages"
                        HorizontalAlignment="Left" VerticalAlignment="Top"
                        FontSize="18" Margin="30 -33 0 0"/>
-                <Image Source="Icons\searchIMG.png" Width="28" Height="28" VerticalAlignment="Top"
+                    <Image Source="Icons\searchIMG.png" Width="28" Height="28" VerticalAlignment="Top"
                        HorizontalAlignment="Left" Margin="8 -35 0 0"/>
+                </StackPanel>
+                <StackPanel HorizontalAlignment="Center"
+                            Width="220" Margin="0,45,0,0">
+                    <ListView ItemsSource="{Binding users}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <TextBlock Text="{Binding Username}"/>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
                 </StackPanel>
             </Grid>
         </Grid>
@@ -86,6 +96,10 @@
                 <RowDefinition Height="15*"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
+            <ListView Grid.Row="1"
+                      ItemsSource="{Binding messages}">
+                
+            </ListView>
             <StackPanel Grid.Row="2">
                 <Button Style="{StaticResource MainButtonStyle}"
                         Width="180" Height="40" HorizontalAlignment="Right" 

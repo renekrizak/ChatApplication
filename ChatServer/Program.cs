@@ -29,7 +29,8 @@ namespace ChatServer
             {
                 var client = new Client(_listener.AcceptTcpClient());
                 _users.Add(client);
-
+                BroadcastConnection();
+                SendID();
                 /* broadcast conn to everyone*/
             }
            
@@ -41,15 +42,43 @@ namespace ChatServer
                     foreach(var usr in _users)
                     {
                         var broadcastPacket = new PacketBuilder();
-                        broadcastPacket.WriteOpCode(1);
-                        broadcastPacket.WriteString(usr.data);
-                        broadcastPacket.WriteString(usr.UID.ToString());
+                        broadcastPacket.WriteOpCode(5);
+                        broadcastPacket.WriteString(usr.Username);
                         user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes());
                     }
                 }
             }
-            Console.WriteLine("Client connected");
-
+            static void SendID()
+            {
+                var user = _users.Last();
+                var idPacket = new PacketBuilder();
+                idPacket.WriteOpCode(1);
+                idPacket.WriteString(user.Username);
+                user.ClientSocket.Client.Send(idPacket.GetPacketBytes());
+            }
+     
+        }
+        public static void BroadcastMessage(string message)
+        {
+            foreach(var user in _users)
+            {
+                var msgPacket = new PacketBuilder();
+                msgPacket.WriteOpCode(4);
+                msgPacket.WriteString(message);
+                user.ClientSocket.Client.Send(msgPacket.GetPacketBytes());
+            }
+        }
+        public static void BroadcastDisconnect(string Username)
+        {
+            var disconnectedUser = _users.Where(x => x.Username.ToString() == Username).FirstOrDefault();
+            _users.Remove(disconnectedUser);
+            foreach(var user in _users)
+            {
+                var broadcastPacket = new PacketBuilder();
+                broadcastPacket.WriteOpCode(10);
+                broadcastPacket.WriteString(Username);
+                user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes());
+            }
         }
 
     }
