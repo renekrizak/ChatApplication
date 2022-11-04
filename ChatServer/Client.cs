@@ -16,6 +16,7 @@ namespace ChatServer
         public string Password { get; set; }
         public string Email { get; set; }
         public Guid UID { get; set; }
+        
         public TcpClient ClientSocket { get; set; }
         PacketReader _packetReader;
         PacketBuilder _packetBuilder;
@@ -26,40 +27,67 @@ namespace ChatServer
             _packetReader = new PacketReader(ClientSocket.GetStream());
             var opcode = _packetReader.ReadByte(); //add checks for opcode
             data = _packetReader.readMessage();
-            Console.WriteLine($"[{DateTime.Now}]: Client has connected with the username: {data}");
-
-            if (opcode == 1)
-            {
-                string username = LoginUsername(data);
-                string password = LoginPassword(data);
-                string ClientID = Queries.ReturnIDQuery(username, password);
-                if(ClientID != "No ID")
-                {
-                    var idPacket = new PacketBuilder();
-                    idPacket.WriteOpCode(1);
-                    idPacket.WriteString(ClientID);
-                    ClientSocket.Client.Send(idPacket.GetPacketBytes());
-                    
-                }
-            }
-
-            if(opcode == 2)
-            {
-                RegisterClient(Guid.NewGuid(), RegisterUsername(data), RegisterEmail(data), RegisterPassword(data), DateTime.Today);   
-                
-            }
-            if(opcode == 3)
-            {
-                Console.WriteLine(data);
-            }
- 
+            Username = LoginUsername(data);
+            Password = LoginPassword(data);
+            Task.Run(() => Process());
+            
         }
 
-        private static void SendIDToClient(TcpClient client, string id)
+        void Process()
+        {
+            while(true)
+            {
+                try
+                {
+                    Console.WriteLine($"Process for {Username} started");
+                    var opcode = _packetReader.ReadByte();
+                    switch(opcode)
+                    {
+                        case 1:
+                            string username = LoginUsername(data);
+                            string password = LoginPassword(data);
+                            string uid = Queries.ReturnIDQuery(username, password);
+                            var idPacket = new PacketBuilder();
+                            idPacket.WriteOpCode(1);
+                            idPacket.WriteString(uid);
+                            ClientSocket.Client.Send(idPacket.GetPacketBytes());
+                            Console.WriteLine($"User with credentials {username}, {password} connected & has UID: {uid}");
+                            break;
+                        case 2:
+                            username = RegisterUsername(data);
+                            password = RegisterPassword(data);
+                            string email = RegisterPassword(data);
+                            Queries.RegisterClientQuery(Guid.NewGuid(), username, email, password, DateTime.Now);
+                            uid = Queries.ReturnIDQuery(username, password);
+                            Console.WriteLine($"User with credentials: {data} registered and has UID: {uid}");
+                            break;
+
+                        case 3:
+                            var msg = _packetReader.ReadString();
+                            Console.WriteLine($"Message recieved: {msg}");
+                            Program.BroadcastMessage(msg);
+                            break;
+                        default:
+                            break;
+                    }
+                } catch(Exception)
+                {
+                    Console.WriteLine($"[{Username}] Disconnected");
+                    Program.BroadcastDisconnect(Username.ToString());
+                    
+                    ClientSocket.Close();
+                    break;
+
+                }
+            }
+        }
+
+        private static void SendIDToClient(string id)
         {
             var idPacket = new PacketBuilder();
             idPacket.WriteOpCode(1);
             idPacket.WriteString(id);
+          
             
         }
 
