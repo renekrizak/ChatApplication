@@ -81,10 +81,14 @@
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Center"
                             Width="220" Margin="0,45,0,0">
+
                     <ListView ItemsSource="{Binding users}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
-                                <TextBlock Text="{Binding Username}"/>
+                                <Border Style="{StaticResource ConnectedUserBorder}">
+                                    <TextBlock Text="{Binding Username}" Style="{StaticResource ConnectedUsersTextBlock}"/>
+                                </Border>
+                                
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
@@ -92,20 +96,32 @@
             </Grid>
         </Grid>
         <Grid Grid.Column="2" Name="MessageView">
+            
             <Grid.RowDefinitions>
                 <RowDefinition Height="3*"/>
                 <RowDefinition Height="15*"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
-            <ListView Grid.Row="1"
-                      ItemsSource="{Binding messages}">
-                
+            <StackPanel>
+                <Border Style="{StaticResource MessageBorder}">
+                    <TextBlock Text="test text" Style="{StaticResource MessageTextBlock}"/>
+                </Border>                
+            </StackPanel>
+                <ListView Grid.Row="1" ItemsSource="{Binding messages}">
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <Border Style="{StaticResource MessageBorder}">
+                            <TextBlock Text="{Binding}" Style="{StaticResource MessageTextBlock}"/>
+
+                        </Border>
+                    </DataTemplate>
+                </ListView.ItemTemplate>                
             </ListView>
             <StackPanel Grid.Row="2">
                 <Button Style="{StaticResource MainButtonStyle}"
                         Width="180" Height="40" HorizontalAlignment="Right" 
-                        Margin="0 20 15 0" Content="Send" Command="{Binding SendMessageCommand}"
-                        />
+                        Margin="0 20 15 0" Content="Send" Command="{Binding SendMessage}"
+                        CommandParameter="{Binding Message}"/>
                 <Border Style="{StaticResource InputTextBoxBorder}" Width="500" Height="40"
                             HorizontalAlignment="Left" Margin="20 -40 0 0">
                     <TextBox Style="{StaticResource InputTextBoxStyle}" Width="500" Height="40"

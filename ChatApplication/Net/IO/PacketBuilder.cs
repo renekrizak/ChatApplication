@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ChatClient.Net.IO
 {
-    class PacketBuilder
+    public class PacketBuilder
     {
         MemoryStream _ms;
         public PacketBuilder()

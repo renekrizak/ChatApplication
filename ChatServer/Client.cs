@@ -41,7 +41,7 @@ namespace ChatServer
             {
                 try
                 {
-                    Console.WriteLine($"Process for {Username} started");
+                    
                     var opcode = _packetReader.ReadByte();
                     switch(opcode)
                     {
@@ -59,6 +59,7 @@ namespace ChatServer
                             Console.WriteLine($"User with credentials: {data} registered and has UID: {uid}");
                             break;
                         case 3:
+                            Console.WriteLine("handling and broadcasting user message");
                             var msg = _packetReader.ReadString();
                             Console.WriteLine($"Message recieved: {msg}");
                             Program.BroadcastMessage(msg);
