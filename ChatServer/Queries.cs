@@ -4,7 +4,7 @@ namespace ChatServer
 {
     public class Queries
     {
-        private static string connString = "Host=localhost;Username=postgres;password=LquS00QC20kl1;Database=postgres"; //Set to your own
+        private static string connString = "Host=localhost;Username=postgres;password=password;Database=postgres"; //Set to your own
 
         public static async void WriteMessageQuery(string id, string conversation_id, string author_id, string message)
         {
@@ -56,8 +56,6 @@ namespace ChatServer
             }
             
         }
-
-       
 
         public static async void WriteRoomUsers(string user_id, string room_id)
         {

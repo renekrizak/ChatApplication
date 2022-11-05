@@ -10,10 +10,10 @@ using ChatClient.ViewModel;
 
 namespace ChatClient.Net
 {
-     class Server
+    public class Server
     {
         TcpClient _client;
-        public PacketReader PacketReader;
+        public PacketReader _packetReader;
 
         public event Action connectedEvent;
         public event Action msgReceivedEvent;
@@ -30,7 +30,7 @@ namespace ChatClient.Net
             if(!_client.Connected)
             {
                 _client.Connect("127.0.0.1", 9551);
-                PacketReader = new PacketReader(_client.GetStream());
+                _packetReader = new PacketReader(_client.GetStream());
                 if(!string.IsNullOrEmpty(loginInfo))
                 {
                     var connectPacket = new PacketBuilder();
@@ -60,7 +60,7 @@ namespace ChatClient.Net
                 Debug.WriteLine("Started reading");
                 while(true)
                 {
-                    var opcode = PacketReader.ReadByte();
+                    var opcode = _packetReader.ReadByte();
                     switch(opcode)
                     {
                         case 1:
@@ -88,6 +88,7 @@ namespace ChatClient.Net
         public void SendMessageToServer(string message)
         {
             Debug.WriteLine($"Message: {message}");
+            message += "000";
                 var messagePacket = new PacketBuilder();
                 messagePacket.WriteOpCode(3);
                 messagePacket.WriteString(message);
