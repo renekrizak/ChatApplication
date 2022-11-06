@@ -77,5 +77,36 @@
             <Setter Property="Grid.Row" Value="1"/>
             <Setter Property="Grid.Column" Value="1"/>
         </Style>
+        <Style TargetType="TextBlock" x:Key="ConnectedUsersTextBlock">
+            <Setter Property="FontFamily" Value="Metropolis"/>
+            <Setter Property="FontSize" Value="22"/>
+            <Setter Property="TextAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontWeight" Value="Light"/>
+        </Style>
+        <Style TargetType="Border" x:Key="ConnectedUserBorder">
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="Background" Value="#212529"/>
+            <Setter Property="CornerRadius" Value="14"/>
+            <Setter Property="Height" Value="32"/>
+            <Setter Property="Opacity" Value="0.8"/>
+            <Setter Property="Width" Value="200"/>
+        </Style>
+        <Style TargetType="Border" x:Key="MessageBorder">
+            <Setter Property="Background" Value="#615EF0"/>
+            <Setter Property="Width" Value="300"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Height" Value="40"/>
+            <Setter Property="CornerRadius" Value="16"/>
+        </Style>
+        <Style TargetType="TextBlock" x:Key="MessageTextBlock">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Metropolis"/>
+            <Setter Property="FontSize" Value="24"/>
+        </Style>
     </Application.Resources>
 </Application>

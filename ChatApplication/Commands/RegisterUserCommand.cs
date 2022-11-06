@@ -23,9 +23,9 @@ namespace ChatClient.Commands
         {
             var values = (object[])parameter;
             var regData = $"{(string)values[0]}|{(string)values[1]}|{(string)values[2]}";
-            var conn = new Server();
-            conn.RegisterConnectToServer(regData);
-            _navigationStore.CurrentViewModel = new ClientViewModel();
+           // var conn = new Server();
+           // conn.RegisterConnectToServer(regData);
+            _navigationStore.CurrentViewModel = new ClientViewModel((string)values[0], (string)values[1], (string)values[2]);
 
         } 
     }

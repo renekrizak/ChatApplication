@@ -57,8 +57,6 @@ namespace ChatServer
             
         }
 
-       
-
         public static async void WriteRoomUsers(string user_id, string room_id)
         {
             await using var dbConn = new NpgsqlConnection(connString);
