@@ -18,7 +18,7 @@ namespace ChatServer
         static TcpListener _listener;
         static void Main()
         {
-            Queries.WriteUsers("test221", "username", "password", "email@email.com", DateTime.Now);
+            //Queries.WriteUsers("test221", "username", "password", "email@email.com", DateTime.Now);
             Queries.ReadUsers();
             _users = new List<Client>();
             
@@ -65,7 +65,8 @@ namespace ChatServer
             foreach(var user in _users)
             {
                 var msgPacket = new PacketBuilder();
-                msgPacket.WriteOpCode(4);
+                msgPacket.WriteOpCode(4); 
+                msgPacket.WriteString(user.Username);
                 msgPacket.WriteString(message);
                 user.ClientSocket.Client.Send(msgPacket.GetPacketBytes());
             }

@@ -6,10 +6,11 @@ using System.Threading.Tasks;
 
 namespace ChatClient.Model
 {
-    public class Message
+    public class MessageModel
     {
 
-
+        public string messageUsernme { get; set; }
+        public string messageContent { get; set; }
 
     }
 }

@@ -100,6 +100,7 @@
             <Setter Property="HorizontalAlignment" Value="Right"/>
             <Setter Property="Height" Value="40"/>
             <Setter Property="CornerRadius" Value="16"/>
+            
         </Style>
         <Style TargetType="TextBlock" x:Key="MessageTextBlock">
             <Setter Property="Foreground" Value="White"/>
@@ -108,5 +109,6 @@
             <Setter Property="FontFamily" Value="Metropolis"/>
             <Setter Property="FontSize" Value="24"/>
         </Style>
+        
     </Application.Resources>
 </Application>
