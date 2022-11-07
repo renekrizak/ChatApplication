@@ -17,16 +17,16 @@ using ChatClient.Store;
 using ChatClient.View;
 using ChatClient.Net;
 using System.Net.Sockets;
-using ChatClient.Core;
 using System.Collections.ObjectModel;
 
 namespace ChatClient.ViewModel
 {
     public class ClientViewModel : ViewModelBase
     {
-        public RelayCommand SendMessageCommand { get; set; }
+        
         public ObservableCollection<UserModel> users { get; set; }
-        public ObservableCollection<string> messages { get; set; }
+        
+        public ObservableCollection<MessageModel> userMessages { get; set; }
 
         private string _username;
         private string _password;
@@ -50,8 +50,8 @@ namespace ChatClient.ViewModel
         public ICommand SendMessage { get; }
         public ClientViewModel(string username, string password)
         {
+            userMessages = new ObservableCollection<MessageModel>();
             users = new ObservableCollection<UserModel>();
-            messages = new ObservableCollection<string>();
             _username = username;
             _password = password;
             Debug.WriteLine($"{_username}|{_password}");
@@ -63,7 +63,8 @@ namespace ChatClient.ViewModel
             _server.IDReceivedEvent += IDReceived;
             _server.LoginConnectToServer(logInfo);
             SendMessage = new SendMessage(_server);
-            //SendMessageCommand = new RelayCommand(o => _server.SendMessageToServer(Message), o => !string.IsNullOrEmpty(Message));
+            
+            
         }
 
         public ClientViewModel(string username, string email, string password)
@@ -98,13 +99,21 @@ namespace ChatClient.ViewModel
 
         private void UserDisconnected()
         {
-           
+           var usrname = _server._packetReader.readMessage();
+            var remove = users.Where(x => x.Username == usrname).FirstOrDefault();
+            Application.Current.Dispatcher.Invoke(() => users.Remove(remove));
         }
 
         private void MessageReceived()
         {
+            var userMessage = new MessageModel
+            {
+                messageUsernme = _server._packetReader.readMessage(),
+                messageContent = _server._packetReader.readMessage()
+            };
+
             var msg = _server._packetReader.readMessage();
-            Application.Current.Dispatcher.Invoke(() => messages.Add(msg));
+            Application.Current.Dispatcher.Invoke(() => userMessages.Add(userMessage));
 
         }
 

@@ -103,17 +103,22 @@
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
             <StackPanel>
-                <Border Style="{StaticResource MessageBorder}">
-                    <TextBlock Text="test text" Style="{StaticResource MessageTextBlock}"/>
-                </Border>                
+               
             </StackPanel>
-                <ListView Grid.Row="1" ItemsSource="{Binding messages}">
+
+                <ListView Grid.Row="1" ItemsSource="{Binding userMessages}"
+                           Focusable="False"
+                          >
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <Border Style="{StaticResource MessageBorder}">
-                            <TextBlock Text="{Binding}" Style="{StaticResource MessageTextBlock}"/>
+                        <StackPanel>
+                            <Label Content="{Binding messageUsernme}"/>
+                            <Border Style="{StaticResource MessageBorder}">
+                                <TextBlock Text="{Binding messageContent}" Style="{StaticResource MessageTextBlock}"/>
 
-                        </Border>
+                            </Border>
+                        </StackPanel>
+                        
                     </DataTemplate>
                 </ListView.ItemTemplate>                
             </ListView>
