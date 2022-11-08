@@ -43,8 +43,16 @@ namespace ChatServer
                     {
                         var broadcastPacket = new PacketBuilder();
                         broadcastPacket.WriteOpCode(5);
-                        broadcastPacket.WriteString(usr.Username);
-                        user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes());
+                        if(usr.Username != null)
+                        {
+                            broadcastPacket.WriteString(usr.Username);
+                            user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes());
+                        } else
+                        {
+                            broadcastPacket.WriteString("Error");
+                            user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes());
+                        }
+                        
                     }
                 }
             }

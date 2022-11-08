@@ -5,10 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:ChatClient.View"
              xmlns:viewmodel="clr-namespace:ChatClient.ViewModel" d:DataContext="{d:DesignInstance Type=viewmodel:ClientViewModel}"
+             xmlns:converters="clr-namespace:ChatClient.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1280"
              Background="White">
-    
+
+    <UserControl.Resources>
+        <converters:MessageConverter x:Key="MessageConverter"/>
+    </UserControl.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1.5*"/>
@@ -102,8 +106,22 @@
                 <RowDefinition Height="15*"/>
                 <RowDefinition Height="2*"/>
             </Grid.RowDefinitions>
-            <StackPanel>
-               
+            <StackPanel Name="UserInfoStackPanel" HorizontalAlignment="Left" VerticalAlignment="Center"
+                        Width="400" Height="108">
+                
+                <Border HorizontalAlignment="Left" VerticalAlignment="Center"
+                        Width="64" Height="64" Margin="10 20 0 0" CornerRadius="12" Background="#7a807c">
+                    <Image Source="Icons\accountCircleIMG.png"/>
+                </Border>
+                <TextBlock Text="{Binding ClientUsername}" Width="200" Height="30"
+                           Margin="0 -90 20 0" FontFamily="Metropolis" FontSize="22"
+                           />
+                <Border Width="24" Height="24" CornerRadius="32" Background="#59ed0e"
+                        Margin="0 -30 200 0">
+                    
+                </Border>
+                <TextBlock Width="100" Text="Online" FontFamily="Metropolis"
+                           FontSize="18" Margin="0 -25 65 0"/>
             </StackPanel>
 
                 <ListView Grid.Row="1" ItemsSource="{Binding userMessages}"
