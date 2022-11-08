@@ -62,13 +62,15 @@ namespace ChatServer
                            
                             break;
                         case 2:
+                            username = RegisterUsername(data);
                             Queries.RegisterClientQuery(Guid.NewGuid(), Username, Email, Password, DateTime.Now);
                             break;
                         case 3:
                             Console.WriteLine("handling and broadcasting user message");
                             var msg = _packetReader.ReadString();
-                            Console.WriteLine($"Message recieved: {msg}");
+                            Console.WriteLine($"[{DateTime.UtcNow}] User: [{Username}] has sent message: {msg}");
                             Program.BroadcastMessage(msg);
+                            Queries.LogMessage(Username, msg);
                             break;
                         default:
                             break;

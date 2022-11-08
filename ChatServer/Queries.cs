@@ -20,6 +20,25 @@ namespace ChatServer
             }
         }
 
+        public static async void LogMessage(string username, string message)
+        {
+            await using var dbConn = new NpgsqlConnection(connString);
+            await dbConn.OpenAsync();
+            await using (var cmd = new NpgsqlCommand("INSERT INTO messages(author_Username, message) VALUES (@username, @message)", dbConn))
+            {
+                //need to remove null characters since postgresql cant write them into text
+                var temp1 = username.Replace("\0", String.Empty);
+                var temp2 = message.Replace("\0", String.Empty);
+                cmd.Parameters.AddWithValue("username", temp1);
+                cmd.Parameters.AddWithValue("message", temp2);
+                if(message != null && username != null)
+                {
+                    await cmd.ExecuteNonQueryAsync();
+                }
+                
+            }
+        }
+
         public static async void RegisterClientQuery(Guid UID, string username, string email, string password, DateTime date)
         {
             await using var dbConn = new NpgsqlConnection(connString);
