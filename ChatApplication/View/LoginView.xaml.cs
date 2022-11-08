@@ -27,6 +27,7 @@ namespace ChatClient.View
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+            
             if(loginUsernameTB.Text.Length >= 1)
             {
                 usernameLabel.Content = "";
@@ -34,6 +35,7 @@ namespace ChatClient.View
             else
             {
                 usernameLabel.Content = "Username";
+               
             }
         }
 

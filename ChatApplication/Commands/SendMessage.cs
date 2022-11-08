@@ -20,6 +20,7 @@ namespace ChatClient.Commands
         public override void Execute(object parameter)
         {
             
+
             _server.SendMessageToServer((string)parameter);
             
         }

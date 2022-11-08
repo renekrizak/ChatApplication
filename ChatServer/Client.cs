@@ -29,8 +29,19 @@ namespace ChatServer
 
             var opcode = _packetReader.ReadByte(); //add checks for opcode
             data = _packetReader.readMessage();
-            Username = LoginUsername(data);
-            Password = LoginPassword(data);
+            if(opcode == 1)
+            {
+                Username = LoginUsername(data);
+                Password = LoginPassword(data);
+            }
+            if(opcode == 2)
+            {
+                Username = RegisterUsername(data);
+                Email = RegisterEmail(data);
+                Password = RegisterPassword(data);
+                Queries.RegisterClientQuery(Guid.NewGuid(), Username, Email, Password, DateTime.Now);
+            }
+           
             Task.Run(() => Process());
             
         }
@@ -51,12 +62,7 @@ namespace ChatServer
                            
                             break;
                         case 2:
-                            username = RegisterUsername(data);
-                            password = RegisterPassword(data);
-                            string email = RegisterPassword(data);
-                            Queries.RegisterClientQuery(Guid.NewGuid(), username, email, password, DateTime.Now);
-                            string uid = Queries.ReturnIDQuery(username, password);
-                            Console.WriteLine($"User with credentials: {data} registered and has UID: {uid}");
+                            Queries.RegisterClientQuery(Guid.NewGuid(), Username, Email, Password, DateTime.Now);
                             break;
                         case 3:
                             Console.WriteLine("handling and broadcasting user message");

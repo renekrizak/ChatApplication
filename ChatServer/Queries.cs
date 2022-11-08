@@ -32,6 +32,7 @@ namespace ChatServer
                 cmd.Parameters.AddWithValue("email", email);
                 cmd.Parameters.AddWithValue("@date_joined", date);
                 await cmd.ExecuteNonQueryAsync();
+                
             }
         }
 

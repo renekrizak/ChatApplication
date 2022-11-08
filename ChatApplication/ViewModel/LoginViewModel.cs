@@ -56,6 +56,7 @@ namespace ChatClient.ViewModel
         
         public LoginViewModel(NavigationStore navigationStore)
         {
+           
             NavigateClientViewCommand = new NavigateClientViewCommand(navigationStore);
             NavigateRegisterViewCommand = new NavigateRegisterViewCommand(navigationStore);
         }

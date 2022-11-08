@@ -42,15 +42,27 @@ namespace ChatClient.Net
 
             }   
         }
+
+        public void DisconnectClient()
+        {
+            _client.GetStream().Close();
+            _client.Close();
+            
+        }
         public void RegisterConnectToServer(string regInfo)
         {
             if(!_client.Connected)
             {
                 _client.Connect("127.0.0.1", 9551);
-                var connectPacket = new PacketBuilder();
-                connectPacket.WriteOpCode(2);
-                connectPacket.WriteString(regInfo);
-                _client.Client.Send(connectPacket.GetPacketBytes());
+                _packetReader = new PacketReader(_client.GetStream());
+                if(!string.IsNullOrEmpty(regInfo))
+                {
+                    var connectPacket = new PacketBuilder();
+                    connectPacket.WriteOpCode(2);
+                    connectPacket.WriteString(regInfo);
+                    _client.Client.Send(connectPacket.GetPacketBytes());
+                }
+                ReadPackets();
             }
         }
         private void ReadPackets()
