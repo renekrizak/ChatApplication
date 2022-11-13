@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
-using ChatClient.Net;
-using ChatClient.Store;
+﻿using ChatClient.Store;
 using ChatClient.ViewModel;
 
 namespace ChatClient.Commands
@@ -23,10 +16,10 @@ namespace ChatClient.Commands
         {
             var values = (object[])parameter;
             var regData = $"{(string)values[0]}|{(string)values[1]}|{(string)values[2]}";
-           // var conn = new Server();
-           // conn.RegisterConnectToServer(regData);
+            // var conn = new Server();
+            // conn.RegisterConnectToServer(regData);
             _navigationStore.CurrentViewModel = new ClientViewModel((string)values[0], (string)values[1], (string)values[2]);
 
-        } 
+        }
     }
 }

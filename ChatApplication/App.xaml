@@ -79,10 +79,11 @@
         </Style>
         <Style TargetType="TextBlock" x:Key="ConnectedUsersTextBlock">
             <Setter Property="FontFamily" Value="Metropolis"/>
-            <Setter Property="FontSize" Value="22"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="Margin" Value="0 10 0 0"/>
             <Setter Property="TextAlignment" Value="Center"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="FontWeight" Value="Light"/>
         </Style>
@@ -90,7 +91,7 @@
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="Background" Value="#212529"/>
             <Setter Property="CornerRadius" Value="14"/>
-            <Setter Property="Height" Value="32"/>
+            <Setter Property="Height" Value="64"/>
             <Setter Property="Opacity" Value="0.8"/>
             <Setter Property="Width" Value="200"/>
         </Style>

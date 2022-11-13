@@ -1,17 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using System.Windows.Controls;
 
 namespace ChatClient.View
 {
@@ -27,10 +14,11 @@ namespace ChatClient.View
 
         private void UsernameTB_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if(UsernameTB.Text.Length >= 1)
+            if (UsernameTB.Text.Length >= 1)
             {
                 UsernameLabel.Content = "";
-            } else
+            }
+            else
             {
                 UsernameLabel.Content = "Username";
             }
@@ -38,10 +26,11 @@ namespace ChatClient.View
 
         private void EmailTB_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if(EmailTB.Text.Length >= 1)
+            if (EmailTB.Text.Length >= 1)
             {
                 EmailLabel.Content = "";
-            } else
+            }
+            else
             {
                 EmailLabel.Content = "Email";
             }
@@ -49,10 +38,11 @@ namespace ChatClient.View
 
         private void PassTB_TextChanged(object sender, TextChangedEventArgs e)
         {
-            if(PassTB.Text.Length >= 1)
+            if (PassTB.Text.Length >= 1)
             {
                 PasswordLabel.Content = "";
-            } else
+            }
+            else
             {
                 PasswordLabel.Content = "Password";
             }

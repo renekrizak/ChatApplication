@@ -1,14 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ChatClient.Net;
-using ChatClient.Store;
+﻿using ChatClient.Store;
 
 namespace ChatClient.ViewModel
 {
-     class MainViewModel : ViewModelBase
+    class MainViewModel : ViewModelBase
     {
         private readonly NavigationStore _navigationStore;
 
@@ -27,6 +21,6 @@ namespace ChatClient.ViewModel
         {
             OnPropertyChanged(nameof(CurrentViewModel));
         }
-        
+
     }
 }

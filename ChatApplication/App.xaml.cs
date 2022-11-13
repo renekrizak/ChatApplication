@@ -1,14 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Globalization;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Data;
-using ChatClient.Store;
+﻿using ChatClient.Store;
 using ChatClient.ViewModel;
+using System.Windows;
 
 namespace ChatApplication
 {
@@ -27,12 +19,12 @@ namespace ChatApplication
             {
                 DataContext = new MainViewModel(navigationStore)
             };
-           MainWindow.Show();
+            MainWindow.Show();
 
             base.OnStartup(e);
         }
 
-        
+
 
     }
 

@@ -1,11 +1,5 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ChatClient.Commands;
 using ChatClient.Store;
-using ChatClient.Commands;
 using System.Windows.Input;
 
 
@@ -47,7 +41,7 @@ namespace ChatClient.ViewModel
                 ObjPropertyChanged();
             }
         }*/
-      
+
         public ICommand RegisterUserCommand { get; }
         public ICommand NavigateLoginViewCommand { get; }
 
@@ -56,6 +50,6 @@ namespace ChatClient.ViewModel
             RegisterUserCommand = new RegisterUserCommand(navigationStore);
             NavigateLoginViewCommand = new NavigateLoginViewCommand(navigationStore);
         }
-     
+
     }
 }
