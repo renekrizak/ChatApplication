@@ -85,12 +85,19 @@
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Center"
                             Width="220" Margin="0,45,0,0">
-
+                    
+                    
                     <ListView ItemsSource="{Binding users}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Border Style="{StaticResource ConnectedUserBorder}">
-                                    <TextBlock Text="{Binding Username}" Style="{StaticResource ConnectedUsersTextBlock}"/>
+                                    <Grid>
+                                        <TextBlock Text="{Binding Username}" Style="{StaticResource ConnectedUsersTextBlock}"/>
+                                        <Border HorizontalAlignment="Left" VerticalAlignment="Center" 
+                        Width="48" Height="48" Margin="10 0 0 0" CornerRadius="12" Background="#7a807c">
+                                            <Image Source="Icons\accountCircleIMG.png"/>
+                                        </Border>
+                                    </Grid>
                                 </Border>
                                 
                             </DataTemplate>
@@ -130,10 +137,10 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
-                            <Label Content="{Binding messageUsernme}"/>
+                            <TextBlock Text="{Binding messageUsername}"/>
                             <Border Style="{StaticResource MessageBorder}">
                                 <TextBlock Text="{Binding messageContent}" Style="{StaticResource MessageTextBlock}"/>
-
+                                
                             </Border>
                         </StackPanel>
                         

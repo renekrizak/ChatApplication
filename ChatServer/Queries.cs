@@ -6,6 +6,21 @@ namespace ChatServer
     {
         private static string connString = "Host=localhost;Username=postgres;password=LquS00QC20kl1;Database=postgres"; //Set to your own
 
+        public static async void ReadLastMessages()
+        {
+            await using var dbConn = new NpgsqlConnection(connString);
+            await dbConn.OpenAsync();
+            await using (var cmd = new NpgsqlCommand("SELECT * FROM messages", dbConn))
+            {
+                using NpgsqlDataReader rdr = cmd.ExecuteReader();
+                while (rdr.Read())
+                {
+                    Console.WriteLine($"{rdr.GetInt32(0)} {rdr.GetString(1)} {rdr.GetString(2)}");
+                }
+
+            }
+        }
+
         public static async void WriteMessageQuery(string id, string conversation_id, string author_id, string message)
         {
             await using var dbConn = new NpgsqlConnection(connString);
@@ -31,11 +46,11 @@ namespace ChatServer
                 var temp2 = message.Replace("\0", String.Empty);
                 cmd.Parameters.AddWithValue("username", temp1);
                 cmd.Parameters.AddWithValue("message", temp2);
-                if(message != null && username != null)
+                if (message != null && username != null)
                 {
                     await cmd.ExecuteNonQueryAsync();
                 }
-                
+
             }
         }
 
@@ -43,7 +58,7 @@ namespace ChatServer
         {
             await using var dbConn = new NpgsqlConnection(connString);
             await dbConn.OpenAsync();
-            await using(var cmd = new NpgsqlCommand("INSERT INTO users(id, username, password, email, date_joined) VALUES(@id, @username, @password, @email, @date_joined)", dbConn))
+            await using (var cmd = new NpgsqlCommand("INSERT INTO users(id, username, password, email, date_joined) VALUES(@id, @username, @password, @email, @date_joined)", dbConn))
             {
                 cmd.Parameters.AddWithValue("id", UID.ToString());
                 cmd.Parameters.AddWithValue("username", username);
@@ -51,7 +66,7 @@ namespace ChatServer
                 cmd.Parameters.AddWithValue("email", email);
                 cmd.Parameters.AddWithValue("@date_joined", date);
                 await cmd.ExecuteNonQueryAsync();
-                
+
             }
         }
 
@@ -61,20 +76,21 @@ namespace ChatServer
             dbConn.Open();
             Console.WriteLine(username);
             Console.WriteLine(password);
-            using(var cmd = new NpgsqlCommand($"SELECT ID FROM users WHERE username='{username}' and password='{password}'", dbConn))
+            using (var cmd = new NpgsqlCommand($"SELECT ID FROM users WHERE username='{username}' and password='{password}'", dbConn))
             {
                 cmd.Parameters.AddWithValue("username", username);
                 cmd.Parameters.AddWithValue("password", password);
                 var result = cmd.ExecuteScalar();
-                if(result != null)
+                if (result != null)
                 {
                     return result.ToString();
-                } else
+                }
+                else
                 {
                     return "No ID";
                 }
             }
-            
+
         }
 
         public static async void WriteRoomUsers(string user_id, string room_id)
@@ -119,20 +135,20 @@ namespace ChatServer
         {
             await using var dbConn = new NpgsqlConnection(connString);
             await dbConn.OpenAsync();
-            await using(var cmd = new NpgsqlCommand("SELECT * FROM users", dbConn))
+            await using (var cmd = new NpgsqlCommand("SELECT * FROM users", dbConn))
             await using (var reader = await cmd.ExecuteReaderAsync())
             {
-                while(await reader.ReadAsync())
+                while (await reader.ReadAsync())
                 {
                     Console.WriteLine($"u_id: {reader.GetString(0)}");
                     Console.WriteLine($"Username: {reader.GetString(1)}");
                     Console.WriteLine($"Password: {reader.GetString(2)}");
                     Console.WriteLine($"Email: {reader.GetString(3)}");
-                    
-                    
+
+
                 }
             }
-            
+
         }
     }
 }

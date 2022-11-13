@@ -1,19 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ChatClient.ViewModel;
+﻿using ChatClient.ViewModel;
+using System;
 
 namespace ChatClient.Store
 {
-     public class NavigationStore
-        {
+    public class NavigationStore
+    {
 
         public event Action CurrentViewModelChanged;
 
-        private ViewModelBase _currentViewModel;   
-            public ViewModelBase CurrentViewModel
+        private ViewModelBase _currentViewModel;
+        public ViewModelBase CurrentViewModel
         {
             get => _currentViewModel;
             set
@@ -27,7 +23,7 @@ namespace ChatClient.Store
         {
             CurrentViewModelChanged?.Invoke();
         }
-            
 
-        }
+
+    }
 }

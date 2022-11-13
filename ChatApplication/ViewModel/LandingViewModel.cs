@@ -1,10 +1,5 @@
-﻿    using ChatClient.Commands;
+﻿using ChatClient.Commands;
 using ChatClient.Store;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace ChatClient.ViewModel

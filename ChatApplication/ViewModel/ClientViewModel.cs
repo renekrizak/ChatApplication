@@ -1,24 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using ChatClient.Commands;
+using ChatClient.Model;
+using ChatClient.Net;
+using ChatClient.Store;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using ChatClient.Commands;
-using ChatClient.Model;
-using ChatClient.Store;
-using ChatClient.View;
-using ChatClient.Net;
-using System.Net.Sockets;
-using System.Collections.ObjectModel;
-using ChatClient.Store;
+
 
 namespace ChatClient.ViewModel
 {
@@ -27,7 +17,7 @@ namespace ChatClient.ViewModel
         private readonly NavigationStore _navigationStore;
         public ICommand NavigateLoginViewCommand { get; }
         public ObservableCollection<UserModel> users { get; set; }
-        
+
         public ObservableCollection<MessageModel> userMessages { get; set; }
 
         private string _username;
@@ -38,7 +28,7 @@ namespace ChatClient.ViewModel
         private Server _server;
         public string ClientUsername { get; set; }
 
-       
+
         public string Message
         {
             get { return _message; }
@@ -69,7 +59,7 @@ namespace ChatClient.ViewModel
             _server.LoginConnectToServer(logInfo);
             SendMessage = new SendMessage(_server);
             NavigateLoginViewCommand = new NavigateLoginViewCommand(navigationStore);
-            
+
         }
 
         public ClientViewModel(string username, string email, string password)
@@ -88,7 +78,6 @@ namespace ChatClient.ViewModel
             _server.IDReceivedEvent += IDReceived;
             _server.RegisterConnectToServer(regInfo);
             SendMessage = new SendMessage(_server);
-
         }
 
         private void IDReceived()
@@ -101,14 +90,14 @@ namespace ChatClient.ViewModel
             Debug.WriteLine($"User UID: {UID}");
         }
 
-        private void  UserConnected()
+        private void UserConnected()
         {
             var user = new UserModel
             {
                 Username = _server._packetReader.readMessage(),
             };
 
-            if(!users.Any(x => x.Username == user.Username))
+            if (!users.Any(x => x.Username == user.Username))
             {
                 Application.Current.Dispatcher.Invoke(() => users.Add(user));
             }
@@ -116,19 +105,22 @@ namespace ChatClient.ViewModel
 
         private void UserDisconnected()
         {
-           var usrname = _server._packetReader.readMessage();
+            var usrname = _server._packetReader.readMessage();
             var remove = users.Where(x => x.Username == usrname).FirstOrDefault();
             Application.Current.Dispatcher.Invoke(() => users.Remove(remove));
         }
 
         private void MessageReceived()
         {
-            var userMessage = new MessageModel
+            var messageInfo = new MessageModel
             {
-                messageUsernme = _server._packetReader.readMessage(),
-                messageContent = _server._packetReader.readMessage()
+                messageUsername = _server._packetReader.readMessage(),
+                messageContent = _server._packetReader.readMessage(),
+
             };
-            Application.Current.Dispatcher.Invoke(() => userMessages.Add(userMessage));
+            Debug.WriteLine($"Message received from: {messageInfo.messageUsername}, content: {messageInfo.messageContent}");
+
+            Application.Current.Dispatcher.Invoke(() => userMessages.Add(messageInfo));
 
         }
 

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ChatClient.Net;
-using ChatClient.Net.IO;
+﻿using ChatClient.Net;
 
 namespace ChatClient.Commands
 {
@@ -19,10 +13,10 @@ namespace ChatClient.Commands
         }
         public override void Execute(object parameter)
         {
-            
+
 
             _server.SendMessageToServer((string)parameter);
-            
+
         }
     }
 }

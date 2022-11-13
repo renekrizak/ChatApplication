@@ -1,17 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace ChatApplication
 {
@@ -22,14 +10,14 @@ namespace ChatApplication
     {
         public MainWindow() => InitializeComponent();
 
-        
+
         public static readonly DependencyProperty ScaleValueProperty = DependencyProperty.Register("ScaleValue", typeof(double), typeof(MainWindow), new UIPropertyMetadata(1.0, new PropertyChangedCallback(OnScaleValueChanged), new CoerceValueCallback(OnCoerceScaleValue)));
 
         private static object OnCoerceScaleValue(DependencyObject o, object value)
         {
             MainWindow mainWindow = o as MainWindow;
             if (mainWindow != null)
-                return mainWindow.OnCoerceScaleValue((double)value); 
+                return mainWindow.OnCoerceScaleValue((double)value);
             else return value;
         }
 
@@ -56,7 +44,7 @@ namespace ChatApplication
             get => (double)GetValue(ScaleValueProperty);
             set => SetValue(ScaleValueProperty, value);
         }
-        
+
 
         private void MainGrid_SizeChanged(object sender, EventArgs e) => CalculateScale();
 

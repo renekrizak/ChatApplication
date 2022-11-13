@@ -12,7 +12,7 @@
         <converters:LoginConverter x:Key="LoginConverter"/>
     </UserControl.Resources>
     <Grid>
-        
+
         <Grid.RowDefinitions>
             <RowDefinition Height="3*"/>
             <RowDefinition Height="9*"/>
@@ -27,8 +27,8 @@
             <Border Style="{StaticResource LogoBorderStyle}"/>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="1">
-           
-                <TextBlock Text="Type in your username and password"
+
+            <TextBlock Text="Type in your username and password"
                        FontFamily="Metropolis" Foreground="Black"
                        Opacity="70" FontWeight="SemiBold" FontSize="16" HorizontalAlignment="Center"
                        Margin="0 110 0 0"

@@ -1,15 +1,9 @@
 ﻿using ChatServer.Net.IO;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ChatServer
 {
-     class Client
+    class Client
     {
         public string data { get; set; }
         public string Username { get; set; }
@@ -17,49 +11,49 @@ namespace ChatServer
         public string Email { get; set; }
         public string ID { get; set; }
         public Guid UID { get; set; }
-        
+
         public TcpClient ClientSocket { get; set; }
         PacketReader _packetReader;
         PacketBuilder _packetBuilder;
         public Client(TcpClient client)
         {
             ClientSocket = client;
-           // UID = Guid.NewGuid();
+            // UID = Guid.NewGuid();
             _packetReader = new PacketReader(ClientSocket.GetStream());
 
             var opcode = _packetReader.ReadByte(); //add checks for opcode
             data = _packetReader.readMessage();
-            if(opcode == 1)
+            if (opcode == 1)
             {
                 Username = LoginUsername(data);
                 Password = LoginPassword(data);
             }
-            if(opcode == 2)
+            if (opcode == 2)
             {
                 Username = RegisterUsername(data);
                 Email = RegisterEmail(data);
                 Password = RegisterPassword(data);
                 Queries.RegisterClientQuery(Guid.NewGuid(), Username, Email, Password, DateTime.Now);
             }
-           
+
             Task.Run(() => Process());
-            
+
         }
 
         void Process()
         {
-            while(true)
+            while (true)
             {
                 try
                 {
-                    
+
                     var opcode = _packetReader.ReadByte();
-                    switch(opcode)
+                    switch (opcode)
                     {
                         case 1:
                             string username = LoginUsername(data);
                             string password = LoginPassword(data);
-                           
+
                             break;
                         case 2:
                             username = RegisterUsername(data);
@@ -75,7 +69,8 @@ namespace ChatServer
                         default:
                             break;
                     }
-                } catch(Exception)
+                }
+                catch (Exception)
                 {
                     Console.WriteLine($"[{Username}] Disconnected");
                     Program.BroadcastDisconnect(Username.ToString());
@@ -91,7 +86,7 @@ namespace ChatServer
             var idPacket = new PacketBuilder();
             idPacket.WriteOpCode(1);
             idPacket.WriteString(id);
-        
+
         }
 
         /*
@@ -123,13 +118,13 @@ namespace ChatServer
             int lastPos = 0;
             int count = 0;
             string result = "";
-            while(loopFlag)
+            while (loopFlag)
             {
                 if (data[lastPos] != '|' && count == 1)
                 {
                     result += data[lastPos];
                 }
-                if(count == 2)
+                if (count == 2)
                 {
                     return result;
                 }
@@ -149,9 +144,9 @@ namespace ChatServer
             int lastPos = 0;
             int count = 0;
             string result = "";
-            while(loopFlag)
+            while (loopFlag)
             {
-                if(lastPos == data.Length)
+                if (lastPos == data.Length)
                 {
                     return result;
                 }
@@ -174,7 +169,7 @@ namespace ChatServer
             int lastPos = 0;
             int count = 0;
             string result = "";
-            while(loopFlag)
+            while (loopFlag)
             {
                 if (data[lastPos] == '|')
                 {
@@ -187,7 +182,7 @@ namespace ChatServer
                 lastPos++;
             }
             return "test1Meno";
-            
+
         }
         public string LoginPassword(string data)
         {
@@ -197,12 +192,12 @@ namespace ChatServer
             string result = "";
             while (loopFlag)
             {
-                
-                if(lastPos == data.Length)
+
+                if (lastPos == data.Length)
                 {
                     return result;
                 }
-                if(count == 1)
+                if (count == 1)
                 {
                     result += data[lastPos];
                 }
@@ -210,13 +205,13 @@ namespace ChatServer
                 {
                     count++;
                 }
-               
+
                 lastPos++;
 
             }
             return result;
         }
 
-        
+
     }
 }
