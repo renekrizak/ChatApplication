@@ -26,6 +26,7 @@ namespace ChatClient.ViewModel
         public string UID { get; set; }
         private string _message;
         private Server _server;
+       
         public string ClientUsername { get; set; }
 
 
@@ -116,14 +117,34 @@ namespace ChatClient.ViewModel
             {
                 messageUsername = _server._packetReader.readMessage(),
                 messageContent = _server._packetReader.readMessage(),
+                messageWidth = 0.0,
+                messageHeight = 0.0
 
             };
             Debug.WriteLine($"Message received from: {messageInfo.messageUsername}, content: {messageInfo.messageContent}");
-
+            messageInfo.messageHeight = GetMessageHeight(messageInfo.messageContent);
+            messageInfo.messageWidth = GetMessageWidth(messageInfo.messageContent);
             Application.Current.Dispatcher.Invoke(() => userMessages.Add(messageInfo));
 
         }
-
+        private double GetMessageWidth(string content)
+        {
+            if(content.Length >= 23)
+            {
+                return 300.0;
+            }
+            return 13.0 * content.Length;
+        }
+        private double GetMessageHeight(string content)
+        {
+            if(content.Length <= 20)
+            {
+                return 40.0;
+            }
+            return 40 * 2;
+        }
     }
+
+    
 
 }
