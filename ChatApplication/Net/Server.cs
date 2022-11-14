@@ -96,7 +96,7 @@ namespace ChatClient.Net
         public void SendMessageToServer(string message)
         {
             Debug.WriteLine($"Message: {message}");
-            message += "TMP";
+            message += "TMP"; //need to add 3 random characters because server doesnt broadcast last 3 characters for some reason
             var messagePacket = new PacketBuilder();
             messagePacket.WriteOpCode(3);
             messagePacket.WriteString(message);

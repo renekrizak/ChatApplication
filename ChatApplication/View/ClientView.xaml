@@ -138,8 +138,9 @@
                     <DataTemplate>
                         <StackPanel>
                             <TextBlock Text="{Binding messageUsername}"/>
-                            <Border Style="{StaticResource MessageBorder}">
-                                <TextBlock Text="{Binding messageContent}" Style="{StaticResource MessageTextBlock}"/>
+                            <Border Style="{StaticResource MessageBorder}" Width="{Binding messageWidth}" Height="{Binding messageHeight}">
+                                <TextBlock Text="{Binding messageContent}" Style="{StaticResource MessageTextBlock}"
+                                           MaxWidth="300"/>
                                 
                             </Border>
                         </StackPanel>
