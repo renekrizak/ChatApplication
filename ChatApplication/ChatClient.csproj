@@ -30,4 +30,16 @@
     <Resource Include="View\Icons\userAddIMG.png" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EditorConfigFiles Remove="C:\Users\renek\Source\Repos\renekrizak\ChatApplication\ChatApplication\ChatApplication\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EditorConfigFiles Remove="C:\Users\renek\Source\Repos\renekrizak\ChatApplication\ChatApplication\ChatApplication\.editorconfig" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="C:\Users\renek\Source\Repos\renekrizak\ChatApplication\ChatApplication\ChatApplication\.editorconfig" />
+  </ItemGroup>
+
 </Project>
