@@ -137,10 +137,10 @@
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>
-                            <TextBlock Text="{Binding messageUsername}"/>
+                            <TextBlock Text="{Binding messageUsername}" VerticalAlignment="{Binding}"/>
                             <Border Style="{StaticResource MessageBorder}" Width="{Binding messageWidth}" Height="{Binding messageHeight}">
                                 <TextBlock Text="{Binding messageContent}" Style="{StaticResource MessageTextBlock}"
-                                           MaxWidth="300"/>
+                                           />
                                 
                             </Border>
                         </StackPanel>

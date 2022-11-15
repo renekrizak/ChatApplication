@@ -13,7 +13,7 @@ namespace ChatServer
         {
             //Queries.WriteUsers("test221", "username", "password", "email@email.com", DateTime.Now);
             //Queries.ReadUsers();
-            Queries.ReadLastMessages();
+            //Queries.ReadLastMessages();
             _users = new List<Client>();
 
             _listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 9551);

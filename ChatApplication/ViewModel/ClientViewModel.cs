@@ -137,11 +137,36 @@ namespace ChatClient.ViewModel
         }
         private double GetMessageHeight(string content)
         {
-            if(content.Length <= 20)
+            if(content.Length <= 22)
             {
-                return 40.0;
+                return 35.0;
             }
-            return 40 * 2;
+            if(content.Length >= 23 && content.Length < 40)
+            {
+                return 35.0 * 2;
+            }
+            if (content.Length >= 40 && content.Length < 60)
+            {
+                return 30.0 * 3;
+            }
+            if(content.Length >= 60 && content.Length < 80)
+            {
+                return 28.0 * 4;
+            }
+            if(content.Length >= 80 && content.Length < 100)
+            {
+                return 32.0 * 5;
+            }
+            if(content.Length >= 100 && content.Length < 120)
+            {
+                return 30.0 * 6;
+            }
+            if(content.Length >= 120 && content.Length < 140)
+            {
+                return 32.0 * 7;
+            }
+            return 40.0;
+
         }
     }
 
