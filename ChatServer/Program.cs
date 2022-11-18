@@ -63,13 +63,13 @@ namespace ChatServer
             }
 
         }
-        public static void BroadcastMessage(string message)
+        public static void BroadcastMessage(string message, string username)
         {
             foreach (var user in _users)
             {
                 var msgPacket = new PacketBuilder();
                 msgPacket.WriteOpCode(4);
-                msgPacket.WriteString(user.Username);
+                msgPacket.WriteString(username);
                 msgPacket.WriteString(message);
                 user.ClientSocket.Client.Send(msgPacket.GetPacketBytes());
             }

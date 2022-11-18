@@ -100,7 +100,6 @@
         </Style>
         <Style TargetType="Border" x:Key="MessageBorder">
             <Setter Property="Background" Value="#615EF0"/>
-            <Setter Property="HorizontalAlignment" Value="Right"/>
             <Setter Property="CornerRadius" Value="16"/>
             
         </Style>

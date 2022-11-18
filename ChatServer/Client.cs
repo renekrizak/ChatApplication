@@ -63,7 +63,7 @@ namespace ChatServer
                             Console.WriteLine("handling and broadcasting user message");
                             var msg = _packetReader.ReadString();
                             Console.WriteLine($"[{DateTime.UtcNow}] User: [{Username}] has sent message: {msg}");
-                            Program.BroadcastMessage(msg);
+                            Program.BroadcastMessage(msg, Username);
                             Queries.LogMessage(Username, msg);
                             break;
                         default:
