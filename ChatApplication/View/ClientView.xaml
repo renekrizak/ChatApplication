@@ -85,8 +85,8 @@
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Center"
                             Width="220" Margin="0,45,0,0">
-                    
-                    
+
+
                     <ListView ItemsSource="{Binding users}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
@@ -99,7 +99,7 @@
                                         </Border>
                                     </Grid>
                                 </Border>
-                                
+
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
@@ -107,15 +107,16 @@
             </Grid>
         </Grid>
         <Grid Grid.Column="2" Name="MessageView">
-            
+
             <Grid.RowDefinitions>
-                <RowDefinition Height="3*"/>
-                <RowDefinition Height="15*"/>
-                <RowDefinition Height="2*"/>
+                <RowDefinition Height="36*"/>
+                <RowDefinition Height="5*"/>
+                <RowDefinition Height="175*"/>
+                <RowDefinition Height="24*"/>
             </Grid.RowDefinitions>
             <StackPanel Name="UserInfoStackPanel" HorizontalAlignment="Left" VerticalAlignment="Center"
                         Width="400" Height="108">
-                
+
                 <Border HorizontalAlignment="Left" VerticalAlignment="Center"
                         Width="64" Height="64" Margin="10 20 0 0" CornerRadius="12" Background="#7a807c">
                     <Image Source="Icons\accountCircleIMG.png"/>
@@ -125,30 +126,31 @@
                            />
                 <Border Width="24" Height="24" CornerRadius="32" Background="#59ed0e"
                         Margin="0 -30 200 0">
-                    
+
                 </Border>
                 <TextBlock Width="100" Text="Online" FontFamily="Metropolis"
                            FontSize="18" Margin="0 -25 65 0"/>
             </StackPanel>
 
-                <ListView Grid.Row="1" ItemsSource="{Binding userMessages}"
-                           Focusable="False"
+            <ListView Grid.Row="1" ItemsSource="{Binding userMessages}"
+                           Focusable="False" Grid.RowSpan="2" HorizontalContentAlignment="Stretch" 
                           >
                 <ListView.ItemTemplate>
                     <DataTemplate>
-                        <StackPanel>
-                            <TextBlock Text="{Binding messageUsername}" VerticalAlignment="{Binding}"/>
-                            <Border Style="{StaticResource MessageBorder}" Width="{Binding messageWidth}" Height="{Binding messageHeight}">
+
+                        <StackPanel HorizontalAlignment="{Binding messageAlignment}">
+                            <TextBlock Text="{Binding messageUsername}" FontFamily="Metropolis"
+                                       FontWeight="Light" Opacity="0.8" FontSize="12"/>
+                            <Border Style="{StaticResource MessageBorder}" Width="{Binding messageWidth}" Height="{Binding messageHeight}"
+                                    Background="{Binding messageBorderBackground}">
                                 <TextBlock Text="{Binding messageContent}" Style="{StaticResource MessageTextBlock}"
-                                           />
-                                
+                                           Foreground="{Binding messageTextForeGround}"/>
                             </Border>
                         </StackPanel>
-                        
                     </DataTemplate>
-                </ListView.ItemTemplate>                
+                </ListView.ItemTemplate>
             </ListView>
-            <StackPanel Grid.Row="2">
+            <StackPanel Grid.Row="3">
                 <Button Style="{StaticResource MainButtonStyle}"
                         Width="180" Height="40" HorizontalAlignment="Right" 
                         Margin="0 20 15 0" Content="Send" Command="{Binding SendMessage}"

@@ -7,15 +7,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800" Background="White">
     <Grid>
-        <Border Style="{StaticResource ConnectedUserBorder}">
+        <ListView Width="400" Height="400">
             <Grid>
-                <TextBlock Text="test1Meno" Style="{StaticResource ConnectedUsersTextBlock}"
-                           Width="120" TextWrapping="Wrap"/>
-                <Border HorizontalAlignment="Left" VerticalAlignment="Center" 
-                        Width="48" Height="48" Margin="10 0 0 0" CornerRadius="12" Background="#7a807c">
-                    <Image Source="Icons\accountCircleIMG.png"/>
-                </Border>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="5*"/>
+                </Grid.ColumnDefinitions>
             </Grid>
-        </Border>     
+            <TextBlock Grid.Column="1"  Text="123"/>
+        </ListView>
     </Grid>
 </UserControl>

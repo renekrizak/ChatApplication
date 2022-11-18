@@ -16,6 +16,7 @@ namespace ChatClient.ViewModel
     {
         private readonly NavigationStore _navigationStore;
         public ICommand NavigateLoginViewCommand { get; }
+        public ICommand NavigateRegisterViewCommand { get; }
         public ObservableCollection<UserModel> users { get; set; }
 
         public ObservableCollection<MessageModel> userMessages { get; set; }
@@ -56,15 +57,16 @@ namespace ChatClient.ViewModel
             _server.connectedEvent += UserConnected;
             _server.disconnectedEvent += UserDisconnected;
             _server.msgReceivedEvent += MessageReceived;
-            _server.IDReceivedEvent += IDReceived;
+            _server.IDReceivedEvent += IDReceivedLogin;
             _server.LoginConnectToServer(logInfo);
             SendMessage = new SendMessage(_server);
             NavigateLoginViewCommand = new NavigateLoginViewCommand(navigationStore);
 
         }
 
-        public ClientViewModel(string username, string email, string password)
+        public ClientViewModel(string username, string email, string password, NavigationStore navigationStore)
         {
+            _navigationStore = navigationStore;
             _username = username;
             _email = email;
             _password = password;
@@ -76,17 +78,27 @@ namespace ChatClient.ViewModel
             _server.connectedEvent += UserConnected;
             _server.disconnectedEvent += UserDisconnected;
             _server.msgReceivedEvent += MessageReceived;
-            _server.IDReceivedEvent += IDReceived;
+            _server.IDReceivedEvent += IDReceivedRegister;
             _server.RegisterConnectToServer(regInfo);
             SendMessage = new SendMessage(_server);
+            NavigateRegisterViewCommand = new NavigateRegisterViewCommand(navigationStore);
         }
 
-        private void IDReceived()
+        private void IDReceivedLogin()
         {
             UID = _server._packetReader.readMessage();
             if (UID == "No ID")
             {
                 NavigateLoginViewCommand.Execute(null);
+            }
+            Debug.WriteLine($"User UID: {UID}");
+        }
+        private void IDReceivedRegister()
+        {
+            UID = _server._packetReader.readMessage();
+            if (UID == "No ID")
+            {
+                NavigateRegisterViewCommand.Execute(null);
             }
             Debug.WriteLine($"User UID: {UID}");
         }
@@ -118,16 +130,43 @@ namespace ChatClient.ViewModel
                 messageUsername = _server._packetReader.readMessage(),
                 messageContent = _server._packetReader.readMessage(),
                 messageWidth = 0.0,
-                messageHeight = 0.0
+                messageHeight = 0.0,
+                messageAlignment = "",
+                messageBorderBackground = "",
+                messageTextForeGround = ""
 
             };
+            
+            messageInfo.messageHeight = SetMessageHeight(messageInfo.messageContent);
+            messageInfo.messageWidth = SetMessageWidth(messageInfo.messageContent);
+            messageInfo.messageAlignment = SetMessageAlignment(messageInfo.messageUsername);
+            messageInfo.messageTextForeGround = SetMessageTextForeground(messageInfo.messageUsername);
+            messageInfo.messageBorderBackground = SetMessageBorderBackground(messageInfo.messageUsername);
             Debug.WriteLine($"Message received from: {messageInfo.messageUsername}, content: {messageInfo.messageContent}");
-            messageInfo.messageHeight = GetMessageHeight(messageInfo.messageContent);
-            messageInfo.messageWidth = GetMessageWidth(messageInfo.messageContent);
             Application.Current.Dispatcher.Invoke(() => userMessages.Add(messageInfo));
 
         }
-        private double GetMessageWidth(string content)
+
+        private string SetMessageBorderBackground(string messageUser)
+        {
+            if(messageUser == ClientUsername)
+            {
+                return "#615EF0";
+            }
+            return "#cccbca";
+        }
+
+        private string SetMessageTextForeground(string messageUser)
+        {
+            if(messageUser == ClientUsername)
+            {
+                return "White";
+            }
+            return "Black";
+        }
+
+
+        private double SetMessageWidth(string content)
         {
             if(content.Length >= 23)
             {
@@ -135,7 +174,7 @@ namespace ChatClient.ViewModel
             }
             return 13.0 * content.Length;
         }
-        private double GetMessageHeight(string content)
+        private double SetMessageHeight(string content)
         {
             if(content.Length <= 22)
             {
@@ -168,8 +207,14 @@ namespace ChatClient.ViewModel
             return 40.0;
 
         }
+
+        private string SetMessageAlignment(string messageUser)
+        {
+            if(messageUser == ClientUsername)
+            {
+                return "Right";
+            }
+            return "Left";
+        }
     }
-
-    
-
 }
