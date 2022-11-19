@@ -23,22 +23,57 @@ namespace ChatServer
 
             var opcode = _packetReader.ReadByte(); //add checks for opcode
             data = _packetReader.readMessage();
+            string[] msgArray = new string[40];
+            msgArray = Queries.ReadLastMessages();
             if (opcode == 1)
             {
                 Username = LoginUsername(data);
                 Password = LoginPassword(data);
+                ID = Queries.ReturnIDQuery(Username, Password);
+                var idPacket = new PacketBuilder();
+                idPacket.WriteOpCode(1);
+                idPacket.WriteString(ID);
+                ClientSocket.Client.Send(idPacket.GetPacketBytes());
+                Thread.Sleep(500);
+                Console.WriteLine($"[{DateTime.UtcNow}] Sending last 20 messages to user: [{Username}]");
+                for (int i = 0; i < msgArray.Length; i +=2)
+                {
+                    SendLastMessages(msgArray, i);
+                }
+                
             }
             if (opcode == 2)
             {
                 Username = RegisterUsername(data);
                 Email = RegisterEmail(data);
                 Password = RegisterPassword(data);
+                string temp = Guid.NewGuid().ToString();
                 Queries.RegisterClientQuery(Guid.NewGuid(), Username, Email, Password, DateTime.Now);
+                ID = Queries.ReturnIDQuery(Username, Password);
+                var idPacket = new PacketBuilder();
+                idPacket.WriteOpCode(1);
+                idPacket.WriteString(temp);
+                ClientSocket.Client.Send(idPacket.GetPacketBytes());
+                Thread.Sleep(500);
+                Console.WriteLine($"[{DateTime.UtcNow}] Sending last 20 messages to user: [{Username}]");
+                for(int i = 0; i < msgArray.Length; i += 2)
+                {
+                    SendLastMessages(msgArray, i);
+                }
+            }
+            void SendLastMessages(string[] msgArray, int i)
+            {
+                var msgPackets = new PacketBuilder();
+                msgPackets.WriteOpCode(4);
+                msgPackets.WriteString(msgArray[i]);
+                msgPackets.WriteString(msgArray[i + 1]);
+                ClientSocket.Client.Send(msgPackets.GetPacketBytes());
             }
 
             Task.Run(() => Process());
 
         }
+
 
         void Process()
         {
@@ -60,7 +95,6 @@ namespace ChatServer
                             Queries.RegisterClientQuery(Guid.NewGuid(), Username, Email, Password, DateTime.Now);
                             break;
                         case 3:
-                            Console.WriteLine("handling and broadcasting user message");
                             var msg = _packetReader.ReadString();
                             Console.WriteLine($"[{DateTime.UtcNow}] User: [{Username}] has sent message: {msg}");
                             Program.BroadcastMessage(msg, Username);
@@ -72,7 +106,6 @@ namespace ChatServer
                 }
                 catch (Exception)
                 {
-                    Console.WriteLine($"[{Username}] Disconnected");
                     Program.BroadcastDisconnect(Username.ToString());
                     ClientSocket.Close();
                     break;
@@ -80,15 +113,6 @@ namespace ChatServer
                 }
             }
         }
-
-        private static void SendIDToClient(string id)
-        {
-            var idPacket = new PacketBuilder();
-            idPacket.WriteOpCode(1);
-            idPacket.WriteString(id);
-
-        }
-
         /*
          Extracts username from the register packet
          */

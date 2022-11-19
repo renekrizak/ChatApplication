@@ -17,6 +17,7 @@ namespace ChatClient.ViewModel
         private readonly NavigationStore _navigationStore;
         public ICommand NavigateLoginViewCommand { get; }
         public ICommand NavigateRegisterViewCommand { get; }
+        public ICommand UploadProfilePictureCommand { get; }
         public ObservableCollection<UserModel> users { get; set; }
 
         public ObservableCollection<MessageModel> userMessages { get; set; }
@@ -29,8 +30,6 @@ namespace ChatClient.ViewModel
         private Server _server;
        
         public string ClientUsername { get; set; }
-
-
         public string Message
         {
             get { return _message; }
@@ -61,6 +60,7 @@ namespace ChatClient.ViewModel
             _server.LoginConnectToServer(logInfo);
             SendMessage = new SendMessage(_server);
             NavigateLoginViewCommand = new NavigateLoginViewCommand(navigationStore);
+            UploadProfilePictureCommand = new UploadProfilePictureCommand();
 
         }
 
