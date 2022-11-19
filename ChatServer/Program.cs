@@ -13,9 +13,9 @@ namespace ChatServer
         {
             //Queries.WriteUsers("test221", "username", "password", "email@email.com", DateTime.Now);
             //Queries.ReadUsers();
-            //Queries.ReadLastMessages();
+            Queries.ReadLastMessages();
             _users = new List<Client>();
-
+            
             _listener = new TcpListener(IPAddress.Parse("127.0.0.1"), 9551);
             _listener.Start();
 
@@ -24,8 +24,6 @@ namespace ChatServer
                 var client = new Client(_listener.AcceptTcpClient());
                 _users.Add(client);
                 BroadcastConnection();
-                SendID();
-                /* broadcast conn to everyone*/
             }
 
             //notifies other users when new person connects
@@ -51,17 +49,7 @@ namespace ChatServer
                     }
                 }
             }
-            static void SendID()
-            {
-                var user = _users.Last();
-                var idPacket = new PacketBuilder();
-                string id = Queries.ReturnIDQuery(user.Username, user.Password);
-                user.ID = id;
-                idPacket.WriteOpCode(1);
-                idPacket.WriteString(id);
-                user.ClientSocket.Client.Send(idPacket.GetPacketBytes());
-            }
-
+            
         }
         public static void BroadcastMessage(string message, string username)
         {
@@ -74,8 +62,10 @@ namespace ChatServer
                 user.ClientSocket.Client.Send(msgPacket.GetPacketBytes());
             }
         }
+
         public static void BroadcastDisconnect(string Username)
         {
+            Console.WriteLine($"[{DateTime.UtcNow}] User: [{Username}] has disconnected");
             var disconnectedUser = _users.Where(x => x.Username.ToString() == Username).FirstOrDefault();
             _users.Remove(disconnectedUser);
             foreach (var user in _users)
@@ -86,6 +76,8 @@ namespace ChatServer
                 user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes());
             }
         }
+
+        
 
     }
 }

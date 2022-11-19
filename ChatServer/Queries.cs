@@ -4,39 +4,38 @@ namespace ChatServer
 {
     public class Queries
     {
-        private static string connString = "Host=localhost;Username=postgres;password=password;Database=postgres"; //Set to your own
+        private static string connString = "Host=localhost;Username=postgres;password=LquS00QC20kl1;Database=postgres"; //Set to your own
 
-        public static async void ReadLastMessages()
+        public static string[] ReadLastMessages()
         {
-            await using var dbConn = new NpgsqlConnection(connString);
-            await dbConn.OpenAsync();
-            await using (var cmd = new NpgsqlCommand("SELECT * FROM messages", dbConn))
+            string[] lastMessages = new string[40];
+            var dbConn = new NpgsqlConnection(connString);
+            dbConn.Open();
+            int i = 0;
+            using (var cmd = new NpgsqlCommand("SELECT * FROM messages ORDER BY ID desc", dbConn))
             {
                 using NpgsqlDataReader rdr = cmd.ExecuteReader();
                 while (rdr.Read())
                 {
-                    Console.WriteLine($"{rdr.GetInt32(0)} {rdr.GetString(1)} {rdr.GetString(2)}");
+                    if(i < 40)
+                    {
+                        lastMessages[i] += rdr.GetString(1);
+                        lastMessages[i + 1] += rdr.GetString(2);
+                        i += 2;
+                    }
+                    else
+                    {
+                        return lastMessages;
+                    }
+                    //Console.WriteLine($"{rdr.GetInt32(0)} {rdr.GetString(1)} {rdr.GetString(2)}");
                 }
-
             }
-        }
-
-        public static async void WriteMessageQuery(string id, string conversation_id, string author_id, string message)
-        {
-            await using var dbConn = new NpgsqlConnection(connString);
-            await dbConn.OpenAsync();
-            await using (var cmd = new NpgsqlCommand("INSERT INTO messages(id, conversation_id, author_id, message) VALUES (@id, @c_id, @a_id, @msg)", dbConn))
-            {
-                cmd.Parameters.AddWithValue("id", id);
-                cmd.Parameters.AddWithValue("c_id", conversation_id);
-                cmd.Parameters.AddWithValue("a_id", author_id);
-                cmd.Parameters.AddWithValue("msg", message);
-                await cmd.ExecuteNonQueryAsync();
-            }
+            return lastMessages;
         }
 
         public static async void LogMessage(string username, string message)
         {
+            Console.WriteLine($"[{DateTime.UtcNow}] Storing message: [{message}] from User: [{username}] to database.");
             await using var dbConn = new NpgsqlConnection(connString);
             await dbConn.OpenAsync();
             await using (var cmd = new NpgsqlCommand("INSERT INTO messages(author_Username, message) VALUES (@username, @message)", dbConn))
@@ -50,12 +49,12 @@ namespace ChatServer
                 {
                     await cmd.ExecuteNonQueryAsync();
                 }
-
             }
         }
 
         public static async void RegisterClientQuery(Guid UID, string username, string email, string password, DateTime date)
         {
+            Console.WriteLine($"[{DateTime.UtcNow}] User: [{username}] has registered.");
             await using var dbConn = new NpgsqlConnection(connString);
             await dbConn.OpenAsync();
             await using (var cmd = new NpgsqlCommand("INSERT INTO users(id, username, password, email, date_joined) VALUES(@id, @username, @password, @email, @date_joined)", dbConn))
@@ -72,10 +71,9 @@ namespace ChatServer
 
         public static string ReturnIDQuery(string username, string password)
         {
+            Console.WriteLine($"[{DateTime.UtcNow}] User: [{username}] has connected to server");
             using var dbConn = new NpgsqlConnection(connString);
             dbConn.Open();
-            Console.WriteLine(username);
-            Console.WriteLine(password);
             using (var cmd = new NpgsqlCommand($"SELECT ID FROM users WHERE username='{username}' and password='{password}'", dbConn))
             {
                 cmd.Parameters.AddWithValue("username", username);
@@ -91,44 +89,6 @@ namespace ChatServer
                 }
             }
 
-        }
-
-        public static async void WriteRoomUsers(string user_id, string room_id)
-        {
-            await using var dbConn = new NpgsqlConnection(connString);
-            await dbConn.OpenAsync();
-            await using (var cmd = new NpgsqlCommand("INSERT INTO room_users(user_id, room_id) VALUES (@u_id, @r_id)", dbConn))
-            {
-                cmd.Parameters.AddWithValue("u_id", user_id);
-                cmd.Parameters.AddWithValue("r_id", room_id);
-                await cmd.ExecuteNonQueryAsync();
-            }
-        }
-
-        public static async void WriteRooms(string room_id)
-        {
-            await using var dbConn = new NpgsqlConnection(connString);
-            await dbConn.OpenAsync();
-            await using (var cmd = new NpgsqlCommand("INSERT INTO rooms(room_id) VALUES (@r_id)", dbConn))
-            {
-                cmd.Parameters.AddWithValue("r_id", room_id);
-                await cmd.ExecuteNonQueryAsync();
-            }
-        }
-
-        public static async void WriteUsers(string user_id, string username, string password, string email, DateTime date_joined)
-        {
-            await using var dbConn = new NpgsqlConnection(connString);
-            await dbConn.OpenAsync();
-            await using (var cmd = new NpgsqlCommand("INSERT INTO users(id, username, password, email, date_joined) VALUES (@u_id, @u_name, @pwd, @email, @date_joined)", dbConn))
-            {
-                cmd.Parameters.AddWithValue("u_id", user_id);
-                cmd.Parameters.AddWithValue("u_name", username);
-                cmd.Parameters.AddWithValue("pwd", password);
-                cmd.Parameters.AddWithValue("email", email);
-                cmd.Parameters.AddWithValue("date_joined", date_joined);
-                await cmd.ExecuteNonQueryAsync();
-            }
         }
 
         public static async void ReadUsers()
