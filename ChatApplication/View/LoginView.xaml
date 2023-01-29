@@ -27,7 +27,6 @@
             <Border Style="{StaticResource LogoBorderStyle}"/>
         </Grid>
         <Grid Grid.Row="1" Grid.Column="1">
-
             <TextBlock Text="Type in your username and password"
                        FontFamily="Metropolis" Foreground="Black"
                        Opacity="70" FontWeight="SemiBold" FontSize="16" HorizontalAlignment="Center"
@@ -62,9 +61,6 @@
                     </MultiBinding>
                 </Button.CommandParameter>
             </Button>
-
-
-
         </Grid>
         <Grid Grid.Row="2" Grid.Column="1">
             <Button Style="{StaticResource MainButtonStyle}" Height="40" Width="450"

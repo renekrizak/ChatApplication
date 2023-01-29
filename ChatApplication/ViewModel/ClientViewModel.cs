@@ -41,6 +41,8 @@ namespace ChatClient.ViewModel
             }
         }
 
+        public string ProfilePicturePath { get; set; }
+
         public ICommand SendMessage { get; }
         public ClientViewModel(string username, string password, NavigationStore navigationStore)
         {
@@ -61,7 +63,6 @@ namespace ChatClient.ViewModel
             SendMessage = new SendMessage(_server);
             NavigateLoginViewCommand = new NavigateLoginViewCommand(navigationStore);
             UploadProfilePictureCommand = new UploadProfilePictureCommand();
-
         }
 
         public ClientViewModel(string username, string email, string password, NavigationStore navigationStore)
@@ -164,7 +165,6 @@ namespace ChatClient.ViewModel
             }
             return "Black";
         }
-
 
         private double SetMessageWidth(string content)
         {

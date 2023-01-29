@@ -7,7 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1280" Background="White">
     <Grid>
-        <TextBlock FontSize="20" Text="Welcome to {name}" Margin="0 0 0 100" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <TextBlock FontSize="20" Text="Welcome to MeChat" Margin="0 0 0 100" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <Button Content="Log-in via existing account" VerticalAlignment="Center" HorizontalAlignment="Center"
                     Style="{StaticResource MainButtonStyle}"
                     MinHeight="40" MinWidth="350" Margin="0 -15 0 0" Command="{Binding NavigateLoginViewCommand}"/>

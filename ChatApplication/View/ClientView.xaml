@@ -18,7 +18,7 @@
             <ColumnDefinition Width="1.5*"/>
             <ColumnDefinition Width="3*"/>
             <ColumnDefinition Width="10*"/>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="0.25*"/>
         </Grid.ColumnDefinitions>
 
         <Grid Grid.Column="0" Name="SideBarGrid">
@@ -63,8 +63,8 @@
             </Grid.RowDefinitions>
 
             <TextBlock Text="Messages" FontFamily="Metropolis"
-                           FontSize="26" FontWeight="Medium" HorizontalAlignment="Left" 
-                           VerticalAlignment="Center"
+                           FontSize="26" FontWeight="Medium" HorizontalAlignment="Center" 
+                           VerticalAlignment="Center" Margin="0 0 40 0"
                            Grid.Column="1" Grid.Row="0"/>
             <Button Style="{StaticResource IconButtonStyle}" Width="32" Height="32"
                         HorizontalAlignment="Right" VerticalAlignment="Center"
@@ -78,10 +78,10 @@
                         <TextBox Style="{StaticResource InputTextBoxStyle}" Width="200"/>
                     </Border>
                     <Label Style="{StaticResource InputTextBoxLabel}" Content="Search messages"
-                       HorizontalAlignment="Left" VerticalAlignment="Top"
+                       HorizontalAlignment="center" VerticalAlignment="Top"
                        FontSize="18" Margin="30 -33 0 0"/>
                     <Image Source="Icons\searchIMG.png" Width="28" Height="28" VerticalAlignment="Top"
-                       HorizontalAlignment="Left" Margin="8 -35 0 0"/>
+                       HorizontalAlignment="Left" Margin="40 -35 0 0"/>
                 </StackPanel>
                 <StackPanel HorizontalAlignment="Center"
                             Width="220" Margin="0,45,0,0">
@@ -155,9 +155,9 @@
                         Width="180" Height="40" HorizontalAlignment="Right" 
                         Margin="0 20 15 0" Content="Send" Command="{Binding SendMessage}"
                         CommandParameter="{Binding Message}"/>
-                <Border Style="{StaticResource InputTextBoxBorder}" Width="500" Height="40"
+                <Border Style="{StaticResource InputTextBoxBorder}" Width="600" Height="40"
                             HorizontalAlignment="Left" Margin="20 -40 0 0">
-                    <TextBox Style="{StaticResource InputTextBoxStyle}" Width="500" Height="40"
+                    <TextBox Style="{StaticResource InputTextBoxStyle}" Width="600" Height="40"
                             Text="{Binding Message, UpdateSourceTrigger=PropertyChanged}"/>
                 </Border>
             </StackPanel>
