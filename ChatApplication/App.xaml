@@ -39,6 +39,7 @@
             <Setter Property="VerticalContentAlignment" Value="Center"/>
 
         </Style>
+        
         <Style TargetType="Border" x:Key="InputTextBoxBorder">
             <Setter Property="CornerRadius" Value="4"/>
             <Setter Property="Opacity" Value="0.8"/>

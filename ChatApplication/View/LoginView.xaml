@@ -46,6 +46,7 @@
                 <Border Style="{StaticResource InputTextBoxBorder}">
                     <TextBox Style="{StaticResource InputTextBoxStyle}" x:Name="loginPassTB"
                              Text="{Binding Password, UpdateSourceTrigger=PropertyChanged}" TextChanged="loginPassTB_TextChanged"
+                             
                              />
                 </Border>
                 <Label Style="{StaticResource InputTextBoxLabel}" Content="Password"

@@ -36,11 +36,14 @@ namespace ChatServer
                 ClientSocket.Client.Send(idPacket.GetPacketBytes());
                 Thread.Sleep(500);
                 Console.WriteLine($"[{DateTime.UtcNow}] Sending last 20 messages to user: [{Username}]");
-                for (int i = 0; i < msgArray.Length; i +=2)
+                if (msgArray.Length > 0)
                 {
-                    SendLastMessages(msgArray, i);
+                    for (int i = 0; i < msgArray.Length; i += 2)
+                    {
+                        SendLastMessages(msgArray, i);
+                    }
                 }
-                
+
             }
             if (opcode == 2)
             {
@@ -56,10 +59,16 @@ namespace ChatServer
                 ClientSocket.Client.Send(idPacket.GetPacketBytes());
                 Thread.Sleep(500);
                 Console.WriteLine($"[{DateTime.UtcNow}] Sending last 20 messages to user: [{Username}]");
-                for(int i = 0; i < msgArray.Length; i += 2)
+                if(msgArray.Length > 0)
                 {
-                    SendLastMessages(msgArray, i);
+                    for (int i = 0; i < msgArray.Length; i += 2)
+                    {
+                        SendLastMessages(msgArray, i);
+                    }
                 }
+                    
+                
+                
             }
             void SendLastMessages(string[] msgArray, int i)
             {

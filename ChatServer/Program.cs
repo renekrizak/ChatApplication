@@ -1,4 +1,5 @@
 ﻿using ChatServer.Net.IO;
+using System.Diagnostics;
 using System.Net;
 using System.Net.Sockets;
 
@@ -35,15 +36,14 @@ namespace ChatServer
                     {
                         var broadcastPacket = new PacketBuilder();
                         broadcastPacket.WriteOpCode(5);
-                        if (usr.Username != null)
+                        if ((usr.Username != null || usr.Username != "") && usr.ID != "No ID")
                         {
                             broadcastPacket.WriteString(usr.Username);
                             user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes());
                         }
                         else
                         {
-                            broadcastPacket.WriteString("Error");
-                            user.ClientSocket.Client.Send(broadcastPacket.GetPacketBytes());
+                            Debug.WriteLine("Wrong credentials");
                         }
 
                     }
